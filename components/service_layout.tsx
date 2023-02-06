@@ -1,7 +1,7 @@
 /** 서비스의 전체적인 구조 담당 */
 
 import Head from "next/head";
-import Header from "./Header/header";
+import Navbar from "./Navbar/navbar";
 
 interface Props {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ const ServiceLayout = function ({ children }: Props) {
         <title>Book Project</title>
       </Head>
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        <Navbar />
         <div className="max-w-screen-xl mx-auto">{children}</div>
       </div>
     </>

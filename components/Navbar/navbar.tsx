@@ -1,4 +1,24 @@
-const header = function () {
+import { useAuth } from "@/contexts/auth_user.context";
+
+const navbar = function () {
+  const { loading, authUser, signOut, signInWithGoogle } = useAuth();
+  const logOutBtn = (
+    <button
+      className="border border-gray-300 rounded-lg px-3 py-1 font-semibold bg-yellow-300"
+      onClick={signOut}
+    >
+      로그아웃
+    </button>
+  );
+  const logInBtn = (
+    <button
+      className="border border-gray-300 rounded-lg px-3 py-1 font-semibold"
+      onClick={signInWithGoogle}
+    >
+      로그인
+    </button>
+  );
+
   return (
     <div className="bg-white border-b">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between px-3 py-5">
@@ -32,8 +52,8 @@ const header = function () {
             </svg>
           </button>
         </div>
-        <div className="flex items-center gap-x-5">
-          <div className="font-semibold">로그인</div>
+        <div className="flex items-center gap-x-2">
+          {loading || authUser === null ? logInBtn : logOutBtn}
           <div className="border border-gray-300 rounded-lg px-3 py-1 font-semibold">
             회원가입
           </div>
@@ -43,4 +63,4 @@ const header = function () {
   );
 };
 
-export default header;
+export default navbar;
