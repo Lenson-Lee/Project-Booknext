@@ -6,10 +6,10 @@ const List = ({ data }: Props) => {
   return data;
 };
 
-// 알라딘 베스트셀러 리스트
-export async function getBookList() {
+// 알라딘 책 리스트 조회
+export async function getBookList(target: string) {
   const request = await fetch(`
-  http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbdmstjs74371420001&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101
+  http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbdmstjs74371420001&QueryType=${target}&MaxResults=12&start=1&SearchTarget=${"Book"}&&output=js&Version=20131101&Cover=Big
   `);
 
   const response = await request.json();

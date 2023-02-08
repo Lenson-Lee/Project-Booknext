@@ -1,35 +1,45 @@
 import ServiceLayout from "@/components/service_layout";
-import type { GetServerSidePropsContext, GetStaticProps, NextPage } from "next";
-import { GoogleLoginBtn } from "@/components/Login/google_login_btn";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import FirebaseClient from "@/models/firebase_client";
-import { useAuth } from "@/contexts/auth_user.context";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import type { GetStaticProps, NextPage } from "next";
+
+import { GoogleAuthProvider } from "firebase/auth";
+import { useState } from "react";
 import { getBookList } from "./api/book.list";
+import BookListSlider from "@/components/List/bookListSlider";
 const provider = new GoogleAuthProvider();
 
 interface Props {
-  data: {};
+  ItemNewSpecial: {}; //주목할만한 신간
+  Bestseller: {}; //베스트셀러
+  ItemNewAll: {}; //신간 전체
+  // ItemEditorChoice: {}; //편집자 추천 > 카테고리로만 조회 가능이 무슨 뜻?
 }
 
-const Home: NextPage<Props> = ({ data }: Props) => {
-  console.log(data);
-
-  const { signInWithGoogle } = useAuth();
-  const [sample, setSample] = useState({});
-
+const Home: NextPage<Props> = ({
+  Bestseller,
+  ItemNewSpecial,
+  ItemNewAll,
+}: Props) => {
   return (
     <ServiceLayout>
-      <GoogleLoginBtn onClick={signInWithGoogle} />
+      <div className="mb-20">
+        <BookListSlider data={Bestseller} title={"베스트셀러"} />
+      </div>
+      <div className="mb-20">
+        <BookListSlider data={ItemNewSpecial} title={"주목할만한 신간"} />
+      </div>
+      <div className="mb-20">
+        <BookListSlider data={ItemNewAll} title={"신간 전체"} />
+      </div>
     </ServiceLayout>
   );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await getBookList();
+  const ItemNewSpecial = await getBookList("ItemNewSpecial");
+  const Bestseller = await getBookList("Bestseller");
+  const ItemNewAll = await getBookList("ItemNewAll");
   return {
-    props: { data },
+    props: { ItemNewSpecial, Bestseller, ItemNewAll },
   };
 };
 export default Home;

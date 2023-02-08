@@ -1,4 +1,5 @@
 import { useAuth } from "@/contexts/auth_user.context";
+import Link from "next/link";
 
 const navbar = function () {
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
@@ -11,12 +12,20 @@ const navbar = function () {
     </button>
   );
   const logInBtn = (
-    <button
-      className="rounded-lg px-3 py-1 font-semibold bg-yellow-300 hover:bg-yellow-400 text-white"
-      onClick={signInWithGoogle}
-    >
-      로그인
-    </button>
+    <>
+      <button
+        className="rounded-lg px-3 py-1 font-semibold bg-yellow-300 hover:bg-yellow-400 text-white"
+        onClick={signInWithGoogle}
+      >
+        로그인
+      </button>
+      <Link
+        href="/join"
+        className="rounded-lg px-3 py-1 font-semibold bg-gray-50 hover:bg-gray-100 border border-gray-300 text-gray-400"
+      >
+        회원가입
+      </Link>
+    </>
   );
 
   return (
