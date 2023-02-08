@@ -4,7 +4,7 @@ const navbar = function () {
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
   const logOutBtn = (
     <button
-      className="border border-gray-300 rounded-lg px-3 py-1 font-semibold bg-yellow-300"
+      className="hover:border-b hover:border-gray-800 text-gray-600 mx-2 px-1 py-1 font-semibold cursor:pointer"
       onClick={signOut}
     >
       로그아웃
@@ -12,7 +12,7 @@ const navbar = function () {
   );
   const logInBtn = (
     <button
-      className="border border-gray-300 rounded-lg px-3 py-1 font-semibold"
+      className="rounded-lg px-3 py-1 font-semibold bg-yellow-300 hover:bg-yellow-400 text-white"
       onClick={signInWithGoogle}
     >
       로그인
@@ -54,9 +54,9 @@ const navbar = function () {
         </div>
         <div className="flex items-center gap-x-2">
           {loading || authUser === null ? logInBtn : logOutBtn}
-          <div className="border border-gray-300 rounded-lg px-3 py-1 font-semibold">
+          {/* <div className="border border-gray-300 rounded-lg px-3 py-1 font-semibold">
             회원가입
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
