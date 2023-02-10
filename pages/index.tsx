@@ -1,10 +1,9 @@
 import ServiceLayout from "@/components/service_layout";
-import type { GetStaticProps, NextPage } from "next";
-
+import type { GetStaticProps } from "next";
 import { GoogleAuthProvider } from "firebase/auth";
-import { useState } from "react";
 import { getBookList } from "./api/book.list";
 import BookListSlider from "@/components/List/bookListSlider";
+
 const provider = new GoogleAuthProvider();
 
 interface Props {
@@ -14,11 +13,8 @@ interface Props {
   // ItemEditorChoice: {}; //편집자 추천 > 카테고리로만 조회 가능이 무슨 뜻?
 }
 
-const Home: NextPage<Props> = ({
-  Bestseller,
-  ItemNewSpecial,
-  ItemNewAll,
-}: Props) => {
+function Home({ Bestseller, ItemNewSpecial, ItemNewAll }: Props) {
+  console.log("인덱스페이지");
   return (
     <ServiceLayout>
       <div className="mb-20">
@@ -32,7 +28,7 @@ const Home: NextPage<Props> = ({
       </div>
     </ServiceLayout>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   const ItemNewSpecial = await getBookList("ItemNewSpecial");

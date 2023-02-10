@@ -1,5 +1,7 @@
 import Slider from "react-slick";
-import Head from "next/head";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 interface Props {
   data: any;
   title: string;
@@ -17,20 +19,6 @@ const BookListSlider = ({ data, title }: Props) => {
   return (
     <>
       {/* react-slider css import시 오류발생 */}
-      <Head>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          charSet="UTF-8"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-        />
-      </Head>
-
       {/* 제목 + 구분 */}
       <div className="flex mb-8">
         <div className="text-2xl font-bold mr-8">{title}</div>
