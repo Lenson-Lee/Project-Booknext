@@ -16,6 +16,10 @@ function SearchQuery({ target, result }: Props) {
   console.log(result);
   return (
     <ServiceLayout>
+      <div className="flex my-8 text-xl font-bold items-start">
+        <div className="text-yellow-400">{target}</div>
+        <div className="">에 관한 검색결과입니다.</div>
+      </div>
       <div className="grid grid-cols-5">
         {result?.map((book: any) => (
           <div key={book.title} className="">
