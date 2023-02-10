@@ -8,8 +8,9 @@ export default function List({ data }: Props) {
 
 // 알라딘 책 리스트 조회
 export async function getBookList(target: string) {
+  const TTB = process.env.ALADIN_TTBKEY;
   const request = await fetch(`
-  http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbdmstjs74371420001&QueryType=${target}&MaxResults=12&start=1&SearchTarget=${"Book"}&&output=js&Version=20131101&Cover=Big
+  http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=${TTB}&QueryType=${target}&MaxResults=12&start=1&SearchTarget=${"Book"}&&output=js&Version=20131101&Cover=Big
   `);
 
   const response = await request.json();

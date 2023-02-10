@@ -14,7 +14,6 @@ interface Props {
 }
 
 function Home({ Bestseller, ItemNewSpecial, ItemNewAll }: Props) {
-  console.log("인덱스페이지");
   return (
     <ServiceLayout>
       <div className="mb-20">
