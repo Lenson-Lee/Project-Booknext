@@ -52,8 +52,21 @@ async function add({
     return { result: false, message: "서버에러" };
   }
 }
+
+// 사용자 페이지 이동을 위한 정보 조회
+async function findByScreenName(
+  screenName: string
+): Promise<InAuthUser | null> {
+  const memberRef = FirebaseAdmin.getInstance()
+    .Firestore.collection(SCR_NAME_COL)
+    .doc(screenName);
+  console.log(memberRef);
+  return null;
+}
+
 const MemberModel = {
   add,
+  findByScreenName,
 };
 
 export default MemberModel;
