@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Link from "next/link";
 
 interface Props {
   data: any;
@@ -27,12 +28,19 @@ const BookListSlider = ({ data, title }: Props) => {
       {/* 책 리스트 슬라이더로 출력 */}
       <Slider {...settings}>
         {data?.data.item.map((book: any) => (
-          <div key={book.title} className="">
+          <Link
+            href={{
+              pathname: "/search/" + book.title + "/detail",
+              query: { data: JSON.stringify(book) },
+            }}
+            key={book.title}
+            className=""
+          >
             <img
               alt="책표지"
               src={book.cover}
               className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
-            ></img>
+            />
             <div className="w-44 mt-4 mx-auto">
               <div className="line-clamp-2 text-base line-clamp-1 font-semibold">
                 {book.title}
@@ -41,7 +49,7 @@ const BookListSlider = ({ data, title }: Props) => {
                 {book.author}
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </Slider>
     </>

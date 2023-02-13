@@ -6,12 +6,23 @@ const navbar = function () {
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
 
   const logOutBtn = (
-    <button
-      className="hover:border-b hover:border-gray-800 text-gray-600 mx-2 px-1 py-1 font-semibold cursor:pointer"
-      onClick={signOut}
-    >
-      로그아웃
-    </button>
+    <div className="flex gap-x-4 items-center">
+      <button className="flex items-center gap-x-2">
+        <img
+          src={authUser?.photoURL ?? "https://bit.ly/broken-link"}
+          className="w-10 h-10 rounded-full border"
+        />
+        <p className="font-semibold">
+          {authUser?.displayName + "님" ?? "unknown"}
+        </p>
+      </button>
+      <button
+        className="border rounded-lg text-xs text-gray-600 px-2 py-1 h-fit cursor:pointer"
+        onClick={signOut}
+      >
+        로그아웃
+      </button>
+    </div>
   );
 
   const logInBtn = (
