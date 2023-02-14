@@ -53,15 +53,19 @@ async function add({
   }
 }
 
-// 사용자 페이지 이동을 위한 정보 조회
+/** 사용자 페이지 이동을 위한 정보 조회 **/
 async function findByScreenName(
   screenName: string
 ): Promise<InAuthUser | null> {
   const memberRef = FirebaseAdmin.getInstance()
     .Firestore.collection(SCR_NAME_COL)
     .doc(screenName);
-  console.log(memberRef);
-  return null;
+  const memberDoc = await memberRef.get();
+  if (memberDoc.exists === false) {
+    return null;
+  }
+  const data = memberDoc.data() as InAuthUser; //이미 타입캐스트가 되어있음
+  return data;
 }
 
 const MemberModel = {

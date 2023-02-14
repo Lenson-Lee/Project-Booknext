@@ -4,11 +4,22 @@ interface Props {
   data: any;
   state: any; // state = {나의서재 책 detail페이지 : mybook, 책 검색 상세페이지 : search}
 }
-
+async function response() {
+  await fetch("/api/user.memo/memo.add", {
+    method: "POST",
+    body: "JSON.stringify(data)",
+    headers: {
+      Accept: "application / json",
+    },
+  });
+}
 const searchInfo = (
   <>
     <div className="flex gap-x-4">
-      <button className="bg-gray-100 text-gray-500 text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl">
+      <button
+        onClick={response}
+        className="bg-gray-100 text-gray-500 text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
