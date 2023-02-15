@@ -4,7 +4,7 @@ import SearchBar from "../SearchBar/searchbar";
 
 const navbar = function () {
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
-
+  console.log(authUser);
   const logOutBtn = (
     <div className="flex gap-x-4 items-center">
       <button className="flex items-center gap-x-2">
@@ -52,7 +52,12 @@ const navbar = function () {
           LOGO
         </Link>
         <div className="flex gap-x-16">
-          <div className="text-lg font-semibold">나의 서재</div>
+          <Link
+            href={`/${authUser?.email?.replace("@gmail.com", "")}`}
+            className="text-lg font-semibold"
+          >
+            나의 서재
+          </Link>
           <div className="text-lg font-semibold">책갈피</div>
         </div>
         <SearchBar />
