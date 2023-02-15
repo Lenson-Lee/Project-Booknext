@@ -9,16 +9,33 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
-  const document = await prisma.BookMemo.create({
+export default async function handler(req: any, res: any) {
+  const {
+    uid,
+    state,
+    title,
+    author,
+    isbn,
+    isbn13,
+    score,
+    start,
+    end,
+    keywords,
+    field,
+  } = JSON.parse(req.body);
+  const document = await prisma.bookMemo.create({
     data: {
-      uid: "test",
-      title: "test",
-      author: "test",
-      isbn: 123,
-      isbn13: 123123123,
-      state: "찜",
-      score: 1,
+      uid: uid,
+      state: state,
+      title: title,
+      author: author,
+      isbn: isbn,
+      isbn13: isbn13,
+      score: score,
+      start: start,
+      end: end,
+      keywords: keywords,
+      field: field,
     },
   });
 

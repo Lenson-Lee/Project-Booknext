@@ -6,20 +6,14 @@ import { searchData } from "@/pages/api/search.detail";
 //[검색어] 를 받기 위해 getServerSideProps 사용
 // url에 넘어온 쿼리를 받는 방식은 getStaticProps에서 hook(useRouter)을 사용할 수 없어 실패
 
-interface Props {
-  // target: any; //동적 라우터를 통해 넘어온 검색값
-  result: {}; //검색 결과
-}
+export type BookType = {
+  data: object;
+};
 
-function SearchQuery({ result }: Props) {
+function SearchQuery() {
   const router = useRouter();
   const query = router.query; // 클릭한 책의 정보
   const data = query && query.data ? JSON.parse(query.data as string) : null;
-
-  // console.log(data);
-
-  console.log("클라이언트로 넘어온 동일 ISBN 리스트 : ");
-  console.log(result);
 
   return (
     <ServiceLayout>

@@ -1,64 +1,13 @@
 import Link from "next/link";
+import SearchInfo from "./SearchInfo";
+import { BookType } from "@/pages/search/[searchquery]/detail";
 
 interface Props {
   data: any;
-  state: any; // state = {나의서재 책 detail페이지 : mybook, 책 검색 상세페이지 : search}
+  state: string; // state = {나의서재 책 detail페이지 : mybook, 책 검색 상세페이지 : search}
 }
-async function response() {
-  await fetch("/api/user.memo/memo.add", {
-    method: "POST",
-    body: "JSON.stringify(data)",
-    headers: {
-      Accept: "application / json",
-    },
-  });
-}
-const searchInfo = (
-  <>
-    <div className="flex gap-x-4">
-      <button
-        onClick={response}
-        className="bg-gray-100 text-gray-500 text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-4 h-4"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-          />
-        </svg>
 
-        <p>찜하기</p>
-      </button>
-      <button className="bg-yellow-300 text-white text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 6v12m6-6H6"
-          />
-        </svg>
-        <p>내 서재에 추가</p>
-      </button>
-    </div>
-  </>
-);
-
-const BookInfo = ({ data, state }: Props) => {
+const BookInfo = ({ state, data }: Props) => {
   return (
     <>
       <div className="flex gap-x-20">
@@ -99,7 +48,7 @@ const BookInfo = ({ data, state }: Props) => {
               자세히 보기
             </Link>
           </div>
-          {state === "search" ? searchInfo : null}
+          {state === "search" ? <SearchInfo data={data} /> : null}
         </div>
       </div>
     </>

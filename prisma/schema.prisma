@@ -16,8 +16,8 @@ model BookMemo {
   uid       String
   title     String  
   author    String  
-  isbn      Int      
-  isbn13    Int?      
+  isbn      String      
+  isbn13    String?      
   createdAt DateTime @default(now())
   state     String
   score     Int
@@ -28,6 +28,15 @@ model BookMemo {
   role      Role     @default(USER)
 }
 
+model WishList {
+    id        Int      @id @default(autoincrement())
+    uid       String
+    title     String  
+    author    String  
+    isbn      String      
+    isbn13    String? 
+    role      Role     @default(USER)
+}
 
 enum Role {
   USER
