@@ -7,7 +7,6 @@ interface Props {
 const SearchInfo = ({ data }: Props) => {
   const [open, setOpen] = useState(false);
   const [bookState, setBookState] = useState("finish"); //  finish, reading
-  const [wish, setWish] = useState(""); //true일 경우 DB에 저장, false일 경우 삭제
   const [score, setScore] = useState(0);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
@@ -25,32 +24,16 @@ const SearchInfo = ({ data }: Props) => {
       author: data.author,
       isbn: data.isbn,
       isbn13: isbn13,
-      score: score,
+      score: score ? score : 0,
       start: start ? start : null,
       end: end ? end : null,
       keywords: keywords ? keywords : null,
       field: "",
+      cover: data.cover,
     };
-    await fetch("/api/user.memo/memo.add", {
+    await fetch("/api/mybook/mybook.add", {
       method: "POST",
       body: JSON.stringify(postdata),
-      headers: {
-        Accept: "application / json",
-      },
-    });
-  }
-
-  async function wishResponse() {
-    const postWishdata = {
-      uid: uid,
-      title: data.title,
-      author: data.author,
-      isbn: data.isbn,
-      isbn13: isbn13,
-    };
-    await fetch("/api/user.wish/wish.add", {
-      method: "POST",
-      body: JSON.stringify(postWishdata),
       headers: {
         Accept: "application / json",
       },
@@ -62,7 +45,8 @@ const SearchInfo = ({ data }: Props) => {
       <div className="flex gap-x-4">
         <button
           onClick={() => {
-            wishResponse();
+            setBookState("wish");
+            response();
           }}
           className="bg-gray-100 text-gray-500 text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
         >

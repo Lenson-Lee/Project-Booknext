@@ -31,22 +31,11 @@ model BookMemo {
   end       Int?
   keywords  String?
   field     String?
-  
+  cover     String?
   author    User  @relation(fields: [userId], references: [uid])
   role      Role     @default(USER)
 }
 
-
-model WishList {
-    id        Int      @id @default(autoincrement())
-    uid       String
-    title     String  
-    author    String  
-    isbn      String      
-    isbn13    String? 
-    role      Role     @default(USER)
-    
-}
 
 enum Role {
   USER

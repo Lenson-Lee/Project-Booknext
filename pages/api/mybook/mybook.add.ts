@@ -1,11 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-//express.js server
-//api : server side
-
-//여기는 메모 추가할때 update로 쓰고싶은디 현재 책 추가 자체를 사용중 변경예정
-
-//시간읽어서 1초전.. 서버시간...
-//node.js에서 쓰는 mysql
 
 const prisma = new PrismaClient();
 
@@ -22,6 +15,7 @@ export default async function handler(req: any, res: any) {
     end,
     keywords,
     field,
+    cover,
   } = JSON.parse(req.body);
   const document = await prisma.bookMemo.create({
     data: {
@@ -36,6 +30,7 @@ export default async function handler(req: any, res: any) {
       end: end,
       keywords: keywords,
       field: field,
+      cover: cover,
     },
   });
 
