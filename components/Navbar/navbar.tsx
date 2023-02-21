@@ -4,7 +4,7 @@ import SearchBar from "../SearchBar/searchbar";
 
 const navbar = function () {
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
-  console.log(authUser);
+
   const logOutBtn = (
     <div className="flex gap-x-4 items-center">
       <button className="flex items-center gap-x-2">

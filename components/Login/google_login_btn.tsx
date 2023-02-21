@@ -7,7 +7,7 @@ export const GoogleLoginBtn = function ({ onClick }: Props) {
     <>
       <button
         onClick={onClick}
-        className="bg-yellow-600 rounded-full px-7 py-2 flex justify-center gap-x-5 text-white text-lg"
+        className="bg-blue-600 rounded-full px-7 py-2 mx-auto mt-20 flex justify-center gap-x-5 text-white text-lg"
       >
         <img
           src="/google.svg"

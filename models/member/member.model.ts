@@ -1,6 +1,9 @@
 import FirebaseAdmin from "../firebase_admin";
 import { InAuthUser } from "../in_auth_user";
 
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 const MEMBER_COL = "members";
 const SCR_NAME_COL = "screen_names";
 
@@ -9,6 +12,7 @@ type AddResult =
   | { result: true; id: string }
   | { result: false; message: string };
 
+/** firebase 입력 후 mysql에도 입력 */
 async function add({
   uid,
   displayName,
@@ -45,6 +49,12 @@ async function add({
     if (addResult === false) {
       return { result: true, id: uid };
     }
+
+    //addResult === true : 계정 생성 완료(중복계정 없음)
+    // Mysql에 데이터 저장
+    const document = await prisma.user.create({ data: { uid: uid } });
+    console.log("member.model에서 prisma memberadd 성공", document);
+
     return { result: true, id: uid };
   } catch (err) {
     console.error(err);

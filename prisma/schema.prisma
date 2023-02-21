@@ -10,14 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  uid       String   @unique
+  memo      BookMemo[]
+}
 
 model BookMemo {
   id        Int      @id @default(autoincrement())
-  uid       String
   title     String  
-  author    String  
+  userId    String
+  auth      String  
   isbn      String      
   isbn13    String?      
+  content   String?
   createdAt DateTime @default(now())
   state     String
   score     Int
@@ -25,8 +31,11 @@ model BookMemo {
   end       Int?
   keywords  String?
   field     String?
+  
+  author    User  @relation(fields: [userId], references: [uid])
   role      Role     @default(USER)
 }
+
 
 model WishList {
     id        Int      @id @default(autoincrement())
@@ -36,6 +45,7 @@ model WishList {
     isbn      String      
     isbn13    String? 
     role      Role     @default(USER)
+    
 }
 
 enum Role {

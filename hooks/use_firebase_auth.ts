@@ -20,6 +20,7 @@ export default function useFirebaseAuth() {
 
       if (signInResult.user) {
         console.info(signInResult.user);
+        //파이어베이스 add
         const resp = await fetch("/api/members.add", {
           method: "post",
           headers: {
@@ -32,6 +33,7 @@ export default function useFirebaseAuth() {
             photoURL: signInResult.user.photoURL,
           }),
         });
+
         console.info({ status: resp.status });
         const respData = await resp.json();
         console.info(respData);

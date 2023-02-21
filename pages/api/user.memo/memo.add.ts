@@ -25,10 +25,10 @@ export default async function handler(req: any, res: any) {
   } = JSON.parse(req.body);
   const document = await prisma.bookMemo.create({
     data: {
-      uid: uid,
+      userId: uid,
       state: state,
       title: title,
-      author: author,
+      auth: author,
       isbn: isbn,
       isbn13: isbn13,
       score: score,
