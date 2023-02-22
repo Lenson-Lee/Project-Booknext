@@ -26,15 +26,4 @@ function SearchQuery() {
   );
 }
 
-// 바보냐? 고유식별 ISBN 받아서 어따쓴다고 ㅡㅡ 같은 장르 책 불러오고 싶다구~~
-// export const getServerSideProps: GetServerSideProps<Props> = async ({
-//   query,
-// }) => {
-//   const data = query && query.data ? JSON.parse(query.data as string) : null;
-//   const categoryId = data.isbn13 ? data.isbn13 : data.isbn;
-//   const result = await searchData(categoryId); //isbn 키로 유사 책 조회
-
-//   return { props: { result: result } };
-// };
-
 export default SearchQuery;

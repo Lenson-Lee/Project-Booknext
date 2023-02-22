@@ -1,6 +1,6 @@
 import Link from "next/link";
+import MybookDetail from "./MybookDetail";
 import SearchInfo from "./SearchInfo";
-import { BookType } from "@/pages/search/[searchquery]/detail";
 
 interface Props {
   data: any;
@@ -49,6 +49,7 @@ const BookInfo = ({ state, data }: Props) => {
             </Link>
           </div>
           {state === "search" ? <SearchInfo data={data} /> : null}
+          {state === "mybook" ? <MybookDetail /> : null}
         </div>
       </div>
     </>

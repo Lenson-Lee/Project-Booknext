@@ -5,9 +5,9 @@ interface Props {
   data: any;
 }
 const SearchInfo = ({ data }: Props) => {
-  const [open, setOpen] = useState(false);
-  const [bookState, setBookState] = useState("finish"); //  finish, reading
-  const [score, setScore] = useState(0);
+  const [open, setOpen] = useState<boolean>(false);
+  const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
+  const [score, setScore] = useState<number>(0);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
   const [keywords, setKeywords] = useState("");
@@ -17,6 +17,7 @@ const SearchInfo = ({ data }: Props) => {
   const isbn13 = data?.isbn13 ? data.isbn13 : "undefine";
   // 데이터 전송
   async function response() {
+    setOpen(false);
     const postdata = {
       uid: uid,
       state: bookState,
@@ -40,13 +41,18 @@ const SearchInfo = ({ data }: Props) => {
     });
   }
 
+  // 찜하기의 경우 클릭하면 바로 입력 : 추후에 두 번째 클릭은 찜 삭제로 처리
+  useEffect(() => {
+    if (bookState === "wish") {
+      response();
+    }
+  }, [bookState]);
   return (
     <div className="">
       <div className="flex gap-x-4">
         <button
           onClick={() => {
             setBookState("wish");
-            response();
           }}
           className="bg-gray-100 text-gray-500 text-lg font-semibold px-4 py-2 flex gap-x-2 items-center rounded-xl"
         >

@@ -1,3 +1,4 @@
+import { useAuth } from "@/contexts/auth_user.context";
 import { InAuthUser } from "@/models/in_auth_user";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -7,7 +8,9 @@ interface Props {
 }
 const MyBookList = ({ userData }: Props) => {
   const [dataList, setDataList] = useState<[]>([]);
-  const [state, setState] = useState("finish");
+  const [state, setState] = useState<string>("finish");
+
+  const { authUser } = useAuth();
 
   //userId 값에 따라 데이터 출력
   //그런데 페이지 새로고침하면 uid 넘어가지 않아 mybook.get에서 uid 일단 고정시키고 작업
@@ -17,6 +20,7 @@ const MyBookList = ({ userData }: Props) => {
       userId: userData?.uid,
     };
 
+    // console.log(state);
     const response = await fetch("/api/mybook/mybook.get", {
       method: "post",
       body: JSON.stringify(data),
@@ -68,6 +72,7 @@ const MyBookList = ({ userData }: Props) => {
         </button>
         <button
           onClick={() => {
+            console.log("wish 클릭해용");
             setState("wish");
           }}
           className={
@@ -83,11 +88,20 @@ const MyBookList = ({ userData }: Props) => {
       <div className="grid grid-cols-4">
         {dataList.map((book: any, index: number) => (
           <Link
+            as={`/${authUser?.email?.replace("@gmail.com", "")}/mybook/${
+              book.title
+            }`}
             href={{
-              pathname: "/search/" + book.title + "/detail",
-              // query: { data: JSON.stringify(book) },
+              pathname: `/${authUser?.email?.replace(
+                "@gmail.com",
+                ""
+              )}/mybook/${book.title}`,
+              query: {
+                isbn: book.isbn,
+                isbn13: book.isbn13 ? book.isbn13 : "null",
+              },
             }}
-            key={book.title + index}
+            key={book.isbn}
             className=""
           >
             <img
@@ -97,6 +111,7 @@ const MyBookList = ({ userData }: Props) => {
             />
             <div className="w-44 mt-4 mx-auto">
               <div className="line-clamp-2 text-base line-clamp-1 font-semibold">
+                {console.log(book)}
                 {book.title}
               </div>
               <div className="line-clamp-1 text-sm line-clamp-1">
