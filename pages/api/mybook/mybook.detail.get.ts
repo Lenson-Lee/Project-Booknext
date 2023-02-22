@@ -18,7 +18,7 @@ export async function getBookDetail(target: any) {
   `
   );
   const response = await request.json();
-  const data = response.item[0];
+  const data = response ? response.item[0] : "";
   return {
     data,
   };

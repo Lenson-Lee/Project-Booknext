@@ -4,7 +4,13 @@ const prisma = new PrismaClient();
 export default async function handler(req: any, res: any) {
   const { userId, state } = JSON.parse(req.body);
 
-  console.log("넘어온 uid", userId, state);
+  console.log(
+    "👀넘어온 uid : ",
+    userId,
+    " 책 상태 : ",
+    state,
+    "--- mybook.get"
+  );
   if (state === "wish") {
     const result = await prisma.bookMemo.findMany({
       where: {
