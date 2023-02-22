@@ -1,6 +1,6 @@
 import { useAuth } from "@/contexts/auth_user.context";
 import { useState, useRef, useEffect } from "react";
-
+import DatePicker from "@/components/DatePicker/DatePicker";
 interface Props {
   data: any;
 }
@@ -143,6 +143,7 @@ const SearchInfo = ({ data }: Props) => {
             </button>
           </div>
           <div className="relative border-t pt-4 space-y-4 mb-6">
+            <DatePicker />
             <div className="flex gap-x-8 text-sm">
               <p className="font-semibold">기간설정</p>
               <div className="flex gap-x-2">
