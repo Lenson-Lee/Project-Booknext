@@ -11,6 +11,7 @@ export default async function handler(req: any, res: any) {
     state,
     "--- mybook.get"
   );
+  //
   if (state === "wish") {
     const result = await prisma.bookMemo.findMany({
       where: {
@@ -22,13 +23,11 @@ export default async function handler(req: any, res: any) {
           id: "desc",
         },
       ],
-      // take: 6,
     });
-    // console.log("GET완료, JSON에 들어가요옹");
     res.status(200).json({ result });
     return;
   }
-
+  //
   const result = await prisma.bookMemo.findMany({
     where: {
       userId: "tMJKJUa2JCW3udqE2Poz7ubrlyD2",
@@ -39,8 +38,6 @@ export default async function handler(req: any, res: any) {
         id: "desc",
       },
     ],
-    // take: 6,
   });
-  // console.log("GET완료, JSON에 들어가요옹");
   res.status(200).json({ result });
 }

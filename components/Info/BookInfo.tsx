@@ -3,7 +3,7 @@ import MybookDetail from "./MybookDetail";
 import SearchInfo from "./SearchInfo";
 
 interface Props {
-  data: any;
+  data: any; // 알라딘에서 긁은 데이터
   state: string; // state = {나의서재 책 detail페이지 : mybook, 책 검색 상세페이지 : search}
 }
 

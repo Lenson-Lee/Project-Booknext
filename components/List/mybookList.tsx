@@ -20,7 +20,6 @@ const MyBookList = ({ userData }: Props) => {
       userId: userData?.uid,
     };
 
-    // console.log(state);
     const response = await fetch("/api/mybook/mybook.get", {
       method: "post",
       body: JSON.stringify(data),
@@ -30,7 +29,6 @@ const MyBookList = ({ userData }: Props) => {
     })
       .then((res) => res.json())
       .then((jsondata) => {
-        console.log("mybookList fetch 결과", jsondata);
         setDataList(jsondata.result);
         return jsondata.result;
       })
@@ -111,7 +109,6 @@ const MyBookList = ({ userData }: Props) => {
             />
             <div className="w-44 mt-4 mx-auto">
               <div className="line-clamp-2 text-base line-clamp-1 font-semibold">
-                {console.log(book)}
                 {book.title}
               </div>
               <div className="line-clamp-1 text-sm line-clamp-1">
