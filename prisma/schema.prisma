@@ -27,8 +27,8 @@ model BookMemo {
   createdAt DateTime @default(now())
   state     String
   score     Int
-  start     Int?
-  end       Int?
+  start     String?
+  end       String?
   keywords  String?
   field     String?
   cover     String?

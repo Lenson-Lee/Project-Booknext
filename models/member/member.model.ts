@@ -23,7 +23,7 @@ async function add({
     const screenName = (email as string).replace("@gmail.com", "");
     const addResult =
       await FirebaseAdmin.getInstance().Firestore.runTransaction(
-        async (transaction) => {
+        async (transaction: any) => {
           const memberRef = FirebaseAdmin.getInstance()
             .Firestore.collection(MEMBER_COL)
             .doc(uid);

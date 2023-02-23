@@ -13,8 +13,8 @@ const SearchInfo = ({ data }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
   const [score, setScore] = useState<number>(0);
-  const [start, setStart] = useState<object>({});
-  const [end, setEnd] = useState<object>({});
+  const [start, setStart] = useState<string>("");
+  const [end, setEnd] = useState<string>("");
   const [keywords, setKeywords] = useState("");
   const authUser = useAuth();
 
