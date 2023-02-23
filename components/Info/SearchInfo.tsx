@@ -13,8 +13,8 @@ const SearchInfo = ({ data }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
   const [score, setScore] = useState<number>(0);
-  const [start, setStart] = useState(null);
-  const [end, setEnd] = useState(null);
+  const [start, setStart] = useState<object>({});
+  const [end, setEnd] = useState<object>({});
   const [keywords, setKeywords] = useState("");
   const authUser = useAuth();
 
@@ -45,6 +45,16 @@ const SearchInfo = ({ data }: Props) => {
       },
     });
   }
+
+  const getStart = (target: any) => {
+    console.log(target.toDateString());
+    setStart(target.toDateString());
+  };
+
+  const getEnd = (target: any) => {
+    console.log(target.toDateString());
+    setEnd(target.toDateString());
+  };
 
   // 찜하기의 경우 클릭하면 바로 입력 : 추후에 두 번째 클릭은 찜 삭제로 처리
   useEffect(() => {
@@ -148,17 +158,17 @@ const SearchInfo = ({ data }: Props) => {
             </button>
           </div>
           <div className="relative border-t pt-4 space-y-4 mb-6">
-            <div className="flex gap-x-8 text-sm">
-              {/* <p className="font-semibold">기간설정</p> */}
-              <div className="flex ">
-                <DatePicker />
+            <div className="flex text-sm gap-x-2">
+              <div className="flex items-center justify-center">
+                <DatePicker getStart={getStart} getEnd state="start" />
                 <p>부터</p>
-                {bookState === "finish" ? (
-                  <div className="flex">
-                    <DatePicker /> <p>까지</p>
-                  </div>
-                ) : null}
               </div>
+              {bookState === "finish" ? (
+                <div className="flex items-center justify-center">
+                  <DatePicker getStart getEnd={getEnd} state="end" />
+                  <p>까지</p>
+                </div>
+              ) : null}
             </div>
             <div className="flex gap-x-8 text-sm">
               <p className="font-semibold">별점주기</p>
