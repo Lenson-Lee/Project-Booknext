@@ -29,9 +29,9 @@ const BookListSlider = ({ data, title }: Props) => {
       <Slider {...settings}>
         {data?.data.item.map((book: any) => (
           <Link
-            as={`/search/isbn=${book.isbn}&isbn13=${
-              book.isbn13 ? book.isbn13 : "null"
-            }/detail`}
+            // as={`/search/isbn=${book.isbn}&isbn13=${
+            //   book.isbn13 ? book.isbn13 : "null"
+            // }/detail`}
             href={{
               pathname: `/search/isbn=${book.isbn}&isbn13=${
                 book.isbn13 ? book.isbn13 : "null"

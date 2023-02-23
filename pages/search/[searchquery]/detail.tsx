@@ -10,11 +10,13 @@ export type BookType = {
   data: object;
 };
 
+interface Props {}
+
 function SearchQuery() {
   const router = useRouter();
   const query = router.query; // 클릭한 책의 정보
   const data = query && query.data ? JSON.parse(query.data as string) : null;
-
+  console.log("검색조회 detail의 데이터 : ", data);
   return (
     <ServiceLayout>
       <div className="bg-white w-full py-10 mt-20 rounded-xl">
@@ -26,4 +28,9 @@ function SearchQuery() {
   );
 }
 
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  query,
+}) => {
+  return { props: {} };
+};
 export default SearchQuery;

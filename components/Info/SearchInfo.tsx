@@ -1,6 +1,11 @@
 import { useAuth } from "@/contexts/auth_user.context";
 import { useState, useRef, useEffect } from "react";
-import DatePicker from "@/components/DatePicker/DatePicker";
+// import DatePicker from "@/components/DatePicker/DatePicker";
+
+import dynamic from "next/dynamic";
+import { enUS } from "date-fns/locale";
+const DatePicker = dynamic(() => import("@/components/DatePicker/DatePicker"));
+
 interface Props {
   data: any;
 }
@@ -143,12 +148,16 @@ const SearchInfo = ({ data }: Props) => {
             </button>
           </div>
           <div className="relative border-t pt-4 space-y-4 mb-6">
-            <DatePicker />
             <div className="flex gap-x-8 text-sm">
-              <p className="font-semibold">기간설정</p>
-              <div className="flex gap-x-2">
-                <div>2023-01-10 부터</div>
-                <div>2023-01-10 까지</div>
+              {/* <p className="font-semibold">기간설정</p> */}
+              <div className="flex ">
+                <DatePicker />
+                <p>부터</p>
+                {bookState === "finish" ? (
+                  <div className="flex">
+                    <DatePicker /> <p>까지</p>
+                  </div>
+                ) : null}
               </div>
             </div>
             <div className="flex gap-x-8 text-sm">
