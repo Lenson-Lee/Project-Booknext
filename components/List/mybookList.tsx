@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/auth_user.context";
 import { InAuthUser } from "@/models/in_auth_user";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -11,15 +12,22 @@ const MyBookList = ({ userData }: Props) => {
   const [state, setState] = useState<string>("finish");
 
   const { authUser } = useAuth();
+  const router = useRouter();
 
-  //userId 값에 따라 데이터 출력
-  //그런데 페이지 새로고침하면 uid 넘어가지 않아 mybook.get에서 uid 일단 고정시키고 작업
+  /** router.query를 받으면 시작하기 위한 코드 */
+  useEffect(() => {
+    if (!router.isReady) return;
+    //screenName 쓸모없는뎅 url때문에 넘어오나?
+    console.log("🙆‍♀️ router.query.screenName : ", router.query.screenName);
+  }, [router.isReady]);
+
+  /** userData가 들어오면 시작
+      userId 값에 따라 데이터 출력 **/
   async function getData() {
     const data = {
       state: state,
       userId: userData?.uid,
     };
-
     const response = await fetch("/api/mybook/mybook.get", {
       method: "post",
       body: JSON.stringify(data),
@@ -37,9 +45,13 @@ const MyBookList = ({ userData }: Props) => {
       });
   }
 
+  //📌userData 들어오면 그 때 돌릴게용
   useEffect(() => {
-    getData();
-  }, [state]);
+    if (userData && router.isReady) {
+      getData();
+    }
+  }, [state, userData]);
+
   return (
     <>
       <div className="flex items-end mb-8">
@@ -86,9 +98,6 @@ const MyBookList = ({ userData }: Props) => {
       <div className="grid grid-cols-4">
         {dataList.map((book: any, index: number) => (
           <Link
-            as={`/${authUser?.email?.replace("@gmail.com", "")}/mybook/${
-              book.title
-            }`}
             href={{
               pathname: `/${authUser?.email?.replace(
                 "@gmail.com",
@@ -99,7 +108,7 @@ const MyBookList = ({ userData }: Props) => {
                 isbn13: book.isbn13 ? book.isbn13 : "null",
               },
             }}
-            key={book.isbn}
+            key={book.isbn + index}
             className=""
           >
             <img
@@ -121,5 +130,4 @@ const MyBookList = ({ userData }: Props) => {
     </>
   );
 };
-
 export default MyBookList;

@@ -3,7 +3,7 @@
  * @author Tiumsolutions (developers@tiumsolutions.com)
  * @brief react-datepicker 커스텀, 날짜 선택 기능. **/
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -18,7 +18,6 @@ interface Props {
   state: string;
 }
 const Clickable = ({ getStart, getEnd, state }: Props) => {
-  //달력 컴포넌트 숨김/출력 버튼 상태. 참일때 열려있음
   const [date, setDate] = useState(new Date());
   //요일찾기
   const findDay = (e: number) => {
@@ -37,6 +36,9 @@ const Clickable = ({ getStart, getEnd, state }: Props) => {
     findDay(getDay(date)) +
     ")";
 
+  useEffect(() => {
+    console.log(date);
+  }, [date]);
   return (
     <>
       {/* 달력 출력 창 */}
@@ -45,11 +47,11 @@ const Clickable = ({ getStart, getEnd, state }: Props) => {
           locale={ko} //한국어
           selected={date} //value
           onChange={(d: any) => {
-            setDate(d);
+            setDate(new Date(d));
             if (state === "start") {
-              getStart(d);
+              getStart(new Date(d));
             } else {
-              getEnd(d);
+              getEnd(new Date(d));
             }
           }} //날짜 선택 시 실행될 함수
           dateFormatCalendar={"yyyy년 MMM"}

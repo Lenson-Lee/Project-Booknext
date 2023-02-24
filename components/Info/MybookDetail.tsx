@@ -1,7 +1,40 @@
-const MybookDetail = () => {
+import { getYear, getMonth, getDate, getDay, parseISO } from "date-fns";
+
+interface Props {
+  mydata: any;
+}
+
+const MybookDetail = ({ mydata }: Props) => {
+  console.log("👍 MybookDetail의 mydata : ", mydata);
+  const state = () => {
+    if (mydata.state === "wish") {
+      return "찜한 책";
+    } else if (mydata.state === "finish") {
+      return "다 읽은 책";
+    } else if (mydata.state === "reading") {
+      return "읽고 있는 책";
+    }
+  };
+
+  //요일찾기
+  const findDay = (e: number) => {
+    const dayList = ["일", "월", "화", "수", "목", "금", "토"];
+    return dayList[e];
+  };
+
+  const calcDay = (day: any) => {
+    return (
+      getYear(day) + "년 " + (getMonth(day) + 1) + "월 " + getDate(day) + "일 "
+      // +
+      // "(" +
+      // findDay(getDay(day)) +
+      // ")"
+    );
+  };
+
   return (
     <div className="bg-gray-50 text-gray-600 p-5 rounded-lg flex gap-x-10 ">
-      <div className="">다 읽은 책</div>
+      <div className="">{state()}</div>
       <div className="flex  gap-x-3 items-center">
         <p className="">나의 별점</p>
         <div className="text-yellow-400 flex">
@@ -18,8 +51,14 @@ const MybookDetail = () => {
       <div className="flex  gap-x-3">
         <p className="">읽은 기간</p>
         <div className="flex gap-x-2">
-          <div>2023-01-10 부터</div>
-          <div>2023-01-10 까지</div>
+          {mydata.start ? (
+            <div>{calcDay(parseISO(mydata.start)) + " 부터"}</div>
+          ) : (
+            <div>정보가 없어요!</div>
+          )}
+          {mydata.end ? (
+            <div>{calcDay(parseISO(mydata.end)) + " 까지"}</div>
+          ) : null}
         </div>
       </div>
     </div>

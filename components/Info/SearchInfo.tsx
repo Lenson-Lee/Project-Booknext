@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from "react";
 // import DatePicker from "@/components/DatePicker/DatePicker";
 
 import dynamic from "next/dynamic";
-import { enUS } from "date-fns/locale";
 const DatePicker = dynamic(() => import("@/components/DatePicker/DatePicker"));
 
 interface Props {
@@ -47,13 +46,13 @@ const SearchInfo = ({ data }: Props) => {
   }
 
   const getStart = (target: any) => {
-    console.log(target.toDateString());
-    setStart(target.toDateString());
+    console.log(target);
+    setStart(target);
   };
 
   const getEnd = (target: any) => {
-    console.log(target.toDateString());
-    setEnd(target.toDateString());
+    console.log(target);
+    setEnd(target);
   };
 
   // 찜하기의 경우 클릭하면 바로 입력 : 추후에 두 번째 클릭은 찜 삭제로 처리

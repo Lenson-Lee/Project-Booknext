@@ -21,7 +21,7 @@ function SearchQuery() {
     <ServiceLayout>
       <div className="bg-white w-full py-10 mt-20 rounded-xl">
         <div className="mx-20">
-          <BookInfo state="search" data={data}></BookInfo>
+          <BookInfo state="search" apidata={data} mydata></BookInfo>
         </div>
       </div>
     </ServiceLayout>
