@@ -36,9 +36,6 @@ const Clickable = ({ getStart, getEnd, state }: Props) => {
     findDay(getDay(date)) +
     ")";
 
-  useEffect(() => {
-    console.log(date);
-  }, [date]);
   return (
     <>
       {/* 달력 출력 창 */}

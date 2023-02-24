@@ -5,11 +5,11 @@ const prisma = new PrismaClient();
 export default async function handler(req: any, res: any) {
   const { id } = JSON.parse(req.body);
 
-  const deletedArticle = await prisma.bookMemo.delete({
+  const deleted = await prisma.bookMemo.delete({
     where: {
       id: id,
     },
   });
-  console.log(deletedArticle);
+  console.log(deleted);
   res.status(200).json({ message: "삭제 끝났어용" });
 }

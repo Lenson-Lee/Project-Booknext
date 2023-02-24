@@ -1,8 +1,11 @@
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MybookDetail from "./MybookDetail";
 import SearchInfo from "./SearchInfo";
+
+const DatePicker = dynamic(() => import("@/components/DatePicker/DatePicker"));
 
 interface Props {
   apidata: any; // 알라딘에서 긁은 데이터
@@ -11,7 +14,23 @@ interface Props {
 }
 
 const BookInfo = ({ state, apidata, mydata }: Props) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
+  const [score, setScore] = useState<number>(0);
+  const [start, setStart] = useState<string>("");
+  const [end, setEnd] = useState<string>("");
   const router = useRouter();
+
+  const getStart = (target: any) => {
+    console.log(target);
+    setStart(target);
+  };
+
+  const getEnd = (target: any) => {
+    console.log(target);
+    setEnd(target);
+  };
+
   // 삭제 이벤트 통신
   const deleteData = async (target: React.SyntheticEvent) => {
     const response = await fetch("/api/mybook/mybook.delete", {
@@ -24,6 +43,28 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
     console.log(response.json());
     return response;
   };
+
+  // 수정이벤트 통신
+  const updateData = async (target: React.SyntheticEvent) => {
+    setOpen(false);
+    const updatedata = {
+      id: mydata.id,
+      state: bookState,
+      score: score ? score : 0,
+      start: start ? start : null,
+      end: end ? end : null,
+    };
+    const response = await fetch("/api/mybook/mybook.update", {
+      method: "put",
+      body: JSON.stringify(updatedata),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+    console.log(response.json());
+    return response;
+  };
+
   useEffect(() => {
     if (!router.isReady) return;
     //screenName 쓸모없는뎅 url때문에 넘어오나?
@@ -37,10 +78,93 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
           src={apidata?.cover}
           className="object-cover object-center border bg-gray-100 w-56 mx-auto h-72"
         />
-        <div className="w-4/5">
+        <div className="w-4/5 relative">
+          {/* ❌중복되는 코드 정리해야겠죠 */}
+          {open && (
+            <div className="mt-4 bg-white border rounded-xl pt-8 pb-10 px-12 absolute top-5 right-0">
+              <div className="flex gap-x-10 text-sm mb-4">
+                <button
+                  onClick={() => {
+                    setBookState("finish");
+                  }}
+                >
+                  <div
+                    className={
+                      (bookState === "finish" ? "bg-yellow-300 " : "") +
+                      "w-2 h-2 rounded-full mx-auto mb-1"
+                    }
+                  />
+                  <p
+                    className={
+                      bookState === "finish"
+                        ? "text-black font-semibold"
+                        : "text-gray-400 "
+                    }
+                  >
+                    다 읽은 책
+                  </p>
+                </button>
+                <button
+                  onClick={() => {
+                    setBookState("reading");
+                  }}
+                >
+                  <div
+                    className={
+                      (bookState === "reading" ? "bg-yellow-300 " : "") +
+                      "w-2 h-2 rounded-full mx-auto mb-1"
+                    }
+                  />
+                  <p
+                    className={
+                      bookState === "reading"
+                        ? "text-black font-semibold"
+                        : "text-gray-400 "
+                    }
+                  >
+                    읽고 있는 책
+                  </p>
+                </button>
+              </div>
+              <div className="relative border-t pt-4 space-y-4 mb-6">
+                <div className="flex text-sm gap-x-2">
+                  <div className="flex items-center justify-center">
+                    <DatePicker getStart={getStart} getEnd state="start" />
+                    <p>부터</p>
+                  </div>
+                  {bookState === "finish" ? (
+                    <div className="flex items-center justify-center">
+                      <DatePicker getStart getEnd={getEnd} state="end" />
+                      <p>까지</p>
+                    </div>
+                  ) : null}
+                </div>
+                <div className="flex gap-x-8 text-sm">
+                  <p className="font-semibold">별점주기</p>
+                  <div className="flex gap-x-1">ㅁ</div>
+                </div>
+                <button
+                  onClick={() =>
+                    updateData(mydata).then((data) => {
+                      alert("수정되었었습니다.");
+                      router.push(`/${router.query.screenName}`);
+                    })
+                  }
+                  className="absolute right-0 bg-yellow-300 text-white px-5 py-1 rounded-lg text-sm"
+                >
+                  등록
+                </button>
+              </div>
+            </div>
+          )}
           {state === "mybook" ? (
             <div className="flex justify-end gap-x-4">
-              <button className="text-gray-400 text-sm pr-4 mr-s border-r">
+              <button
+                onClick={(e) => {
+                  setOpen(!open);
+                }}
+                className="text-gray-400 text-sm pr-4 mr-s border-r"
+              >
                 수정하기
               </button>
               <button
