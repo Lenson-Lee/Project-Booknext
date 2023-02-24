@@ -17,6 +17,14 @@ const BookInfo = ({ state, data }: Props) => {
           className="object-cover object-center border bg-gray-100 w-56 mx-auto h-72"
         />
         <div className="w-4/5">
+          {state === "mybook" ? (
+            <div className="flex justify-end gap-x-4">
+              <button className="text-gray-400 text-sm pr-4 mr-s border-r">
+                수정하기
+              </button>
+              <button className="text-gray-400 text-sm">삭제하기</button>
+            </div>
+          ) : null}
           <div className="h-4/5">
             <p className="text-xl font-semibold mb-4">{data?.title}</p>
             <p className="my-1 text-gray-500">{data?.categoryName}</p>
