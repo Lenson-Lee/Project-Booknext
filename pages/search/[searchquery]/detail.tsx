@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 import ServiceLayout from "@/components/service_layout";
 import { useRouter } from "next/router";
 import BookInfo from "@/components/Info/BookInfo";
-import { searchData } from "@/pages/api/search.detail";
+import { searchData } from "@/pages/api/search/search.detail";
 //[검색어] 를 받기 위해 getServerSideProps 사용
 // url에 넘어온 쿼리를 받는 방식은 getStaticProps에서 hook(useRouter)을 사용할 수 없어 실패
 

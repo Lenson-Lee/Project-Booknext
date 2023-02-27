@@ -1,6 +1,6 @@
 import ServiceLayout from "@/components/service_layout";
 import BookInfo from "@/components/Info/BookInfo";
-import { getBookDetail } from "@/pages/api/mybook/mybook.detail.get";
+import { getBookDetail } from "@/pages/api/mybook/mybook.get.detail";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

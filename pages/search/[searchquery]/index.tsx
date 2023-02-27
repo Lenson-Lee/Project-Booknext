@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
-import { searchResult } from "../../api/search.result";
+import { searchResult } from "../../api/search/search.result";
 import ServiceLayout from "@/components/service_layout";
 import Link from "next/link";
 

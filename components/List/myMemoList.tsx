@@ -1,3 +1,4 @@
+import { useAuth } from "@/contexts/auth_user.context";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -5,11 +6,36 @@ interface Props {
 }
 const MyMemoList = ({ apidata }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [keywordInput, setKeywordInput] = useState<string>("");
+  const [keywordInput, setKeywordInput] = useState<string>(""); // 분류되지 않은키워드 문자열
+  /** ','로 구분한 단어들 배열 */
   const [keywordArr, setKeywordArr] = useState<any>([]);
   const [memo, setMemo] = useState<string>("");
 
-  const { title, categoryName, author } = apidata;
+  const { title, categoryName, author, isbn, isbn13 } = apidata;
+
+  const authUser = useAuth();
+  const isbn_13 = isbn13 ? isbn13 : "undefine";
+
+  // 데이터 전송
+  async function response() {
+    setOpen(false);
+    const postdata = {
+      userId: authUser.authUser?.uid ?? "undefine",
+      isbn: isbn,
+      isbn13: isbn_13,
+      content: memo,
+
+      keywords: JSON.stringify(keywordArr),
+    };
+    await fetch("/api/mymemo/mymemo.add", {
+      method: "POST",
+      body: JSON.stringify(postdata),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+  }
+
   useEffect(() => {
     let arr: any = [];
 
@@ -66,9 +92,12 @@ const MyMemoList = ({ apidata }: Props) => {
                 />
               </div>
               <div className="mt-2 flex gap-x-1 text-sm font-semibold">
-                {keywordArr.map((e: string) => {
+                {keywordArr.map((e: string, index: number) => {
                   return (
-                    <div className="px-2 bg-yellow-50 text-yellow-400 border border-yellow-400 rounded-full">
+                    <div
+                      key={e + index}
+                      className="px-2 bg-yellow-50 text-yellow-400 border border-yellow-400 rounded-full"
+                    >
                       {e}
                     </div>
                   );
@@ -78,7 +107,7 @@ const MyMemoList = ({ apidata }: Props) => {
               {/* edit zone */}
               <textarea
                 onChange={(e) => {
-                  setKeywordArr(e.currentTarget.value);
+                  setMemo(e.currentTarget.value);
                 }}
                 className="mt-10 outline-none resize-none w-full h-96 bg-gray-100 rounded-lg p-5"
               />
@@ -93,7 +122,7 @@ const MyMemoList = ({ apidata }: Props) => {
                   취소하기
                 </button>
                 <button
-                  // onClick={response}
+                  onClick={response}
                   className=" bg-yellow-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
                 >
                   저장하기

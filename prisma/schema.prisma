@@ -33,9 +33,20 @@ model BookMemo {
   field     String?
   cover     String?
   author    User  @relation(fields: [userId], references: [uid])
+
   role      Role     @default(USER)
 }
 
+model MemoList {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  isbn      String      
+  isbn13    String?      
+  content   String?
+  createdAt DateTime @default(now())
+  keywords  String?
+  role      Role     @default(USER)
+}
 
 enum Role {
   USER
