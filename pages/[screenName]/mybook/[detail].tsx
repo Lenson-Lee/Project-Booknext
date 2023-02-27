@@ -4,6 +4,7 @@ import { getBookDetail } from "@/pages/api/mybook/mybook.detail.get";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import MyMemoList from "@/components/List/myMemoList";
 export type BookType = {
   data: object;
 };
@@ -28,10 +29,11 @@ function detailQuery({ data }: Props) {
 
   return (
     <ServiceLayout>
-      <div className="bg-white w-full py-10 mt-20 rounded-xl">
-        <div className="mx-20">
-          <BookInfo state="mybook" apidata={apidata} mydata={mydata}></BookInfo>
-        </div>
+      <div className="bg-white w-full py-10 mt-20 px-20 rounded-xl">
+        <BookInfo state="mybook" apidata={apidata} mydata={mydata}></BookInfo>
+      </div>
+      <div className="bg-white w-full py-10 mt-10 px-20 rounded-xl">
+        <MyMemoList apidata={apidata} />
       </div>
     </ServiceLayout>
   );
