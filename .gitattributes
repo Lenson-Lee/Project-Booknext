@@ -1,2 +1,1 @@
-*.css linguist-vendored=false
-# *.tsx linguist-vendored=false
+*.css linguist-detectable=false
