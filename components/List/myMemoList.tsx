@@ -31,25 +31,26 @@ const MyMemoList = ({ apidata, memodata }: Props) => {
       getYear(day) + "년 " + (getMonth(day) + 1) + "월 " + getDate(day) + "일 "
     );
   };
-  /** 메모의 id값을 받아 메모 수정 */
-  // async function updateMemo(id: number) {
-  //   setOpen(false);
-  //   const postdata = {
-  //     id: id,
-  //     userId: authUser.authUser?.uid ?? "undefine",
-  //     isbn: isbn,
-  //     isbn13: isbn_13,
-  //     content: memo,
-  //     keywords: JSON.stringify(keywordArr),
-  //   };
-  //   await fetch("/api/mymemo/mymemo.update", {
-  //     method: "POST",
-  //     body: JSON.stringify(postdata),
-  //     headers: {
-  //       Accept: "application / json",
-  //     },
-  //   });
-  // }
+
+  /** 메모수정이벤트 통신 */
+  const updateData = async () => {
+    setOpen(false);
+    const updatedata = {
+      id: targetMemo.id,
+      content: memo,
+      keywords: JSON.stringify(keywordArr),
+    };
+    const response = await fetch("/api/mymemo/mymemo.update", {
+      method: "put",
+      body: JSON.stringify(updatedata),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+    console.log(response.json());
+    return response;
+  };
+
   /** 데이터 추가 ADD/Push */
   async function response() {
     setOpen(false);
@@ -160,8 +161,9 @@ const MyMemoList = ({ apidata, memodata }: Props) => {
                   >
                     취소하기
                   </button>
+
                   <button
-                    onClick={response}
+                    onClick={targetMemo ? updateData : response}
                     className=" bg-yellow-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
                   >
                     저장하기
