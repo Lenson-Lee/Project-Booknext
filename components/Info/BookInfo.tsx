@@ -176,7 +176,7 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
                 }}
                 className="text-gray-400 text-sm"
               >
-                삭제하기
+                서재에서 삭제
               </button>
             </div>
           ) : null}
