@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 export default async function handler(req: any, res: any) {
   const { id } = JSON.parse(req.body);
 
+  console.log("🚨🚨🚨🚨🚨", id);
   const document = await prisma.memoList.delete({
     where: { id: id },
   });

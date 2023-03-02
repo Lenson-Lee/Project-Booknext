@@ -32,25 +32,6 @@ const MyMemoList = ({ apidata, memodata }: Props) => {
     );
   };
 
-  /** 메모수정이벤트 통신 */
-  const updateData = async () => {
-    setOpen(false);
-    const updatedata = {
-      id: targetMemo.id,
-      content: memo,
-      keywords: JSON.stringify(keywordArr),
-    };
-    const response = await fetch("/api/mymemo/mymemo.update", {
-      method: "put",
-      body: JSON.stringify(updatedata),
-      headers: {
-        Accept: "application / json",
-      },
-    });
-    console.log(response.json());
-    return response;
-  };
-
   /** 데이터 추가 ADD/Push */
   async function response() {
     setOpen(false);
@@ -69,6 +50,45 @@ const MyMemoList = ({ apidata, memodata }: Props) => {
       },
     });
   }
+
+  /** 메모수정이벤트 통신 */
+  const updateData = async () => {
+    setOpen(false);
+    /** input을 건들지 않았을 때(memo, keywordArr의 길이가 0일때) : 기본값을 저장 */
+    const updatedata = {
+      id: targetMemo.id,
+      content: memo.length > 0 ? memo : targetMemo.content,
+      keywords:
+        keywordArr.length > 0 ? JSON.stringify(keywordArr) : targetMemo.keyword,
+    };
+
+    const response = await fetch("/api/mymemo/mymemo.update", {
+      method: "put",
+      body: JSON.stringify(updatedata),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+    console.log(response.json());
+    return response;
+  };
+
+  /** 메모삭제이벤트 통신 */
+  const deleteData = async (id: number) => {
+    const deletedata = {
+      id: id,
+    };
+    const response = await fetch("/api/mymemo/mymemo.delete", {
+      method: "delete",
+      body: JSON.stringify(deletedata),
+      headers: {
+        Accept: "application / json",
+      },
+    });
+    console.log(response.json());
+    return response;
+  };
+
   /** 키워드 공백 제거 및 끊기  */
   useEffect(() => {
     let arr: any = [];
@@ -166,7 +186,7 @@ const MyMemoList = ({ apidata, memodata }: Props) => {
                     onClick={targetMemo ? updateData : response}
                     className=" bg-yellow-300 text-white font-semibold px-4 py-1 rounded-lg text-lg"
                   >
-                    저장하기
+                    {targetMemo ? "수정하기" : "저장하기"}
                   </button>
                 </div>
               </div>
@@ -196,7 +216,14 @@ const MyMemoList = ({ apidata, memodata }: Props) => {
                     >
                       수정하기
                     </button>
-                    <button className="hover:text-gray-500">삭제하기</button>
+                    <button
+                      onClick={() => {
+                        deleteData(item.id);
+                      }}
+                      className="hover:text-gray-500"
+                    >
+                      삭제하기
+                    </button>
                   </div>
                 </div>
 
