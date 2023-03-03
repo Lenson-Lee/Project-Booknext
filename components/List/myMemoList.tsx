@@ -1,7 +1,6 @@
 import { useAuth } from "@/contexts/auth_user.context";
 import { getMymemoList } from "@/pages/api/mymemo/mymemo.get";
 import { getDate, getMonth, getYear, parseISO } from "date-fns";
-import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 
 interface Props {

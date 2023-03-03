@@ -53,7 +53,10 @@ const navbar = function () {
         </Link>
         <div className="flex gap-x-16">
           <Link
-            href={`/${authUser?.email?.replace("@gmail.com", "")}`}
+            href={{
+              pathname: `/${authUser?.email?.replace("@gmail.com", "")}`,
+              query: { uid: authUser?.uid },
+            }}
             className="text-lg font-semibold"
           >
             나의 서재

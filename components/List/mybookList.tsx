@@ -18,7 +18,7 @@ const MyBookList = ({ userData }: Props) => {
   useEffect(() => {
     if (!router.isReady) return;
     //screenName 쓸모없는뎅 url때문에 넘어오나?
-    console.log("🙆‍♀️ router.query.screenName : ", router.query.screenName);
+    // console.log("🙆‍♀️ router.query.screenName : ", router.query.screenName);
   }, [router.isReady]);
 
   /** userData가 들어오면 시작
@@ -55,7 +55,7 @@ const MyBookList = ({ userData }: Props) => {
   return (
     <>
       <div className="flex items-end mb-8">
-        <div className="text-2xl font-bold mr-8">내가 저장한 책</div>
+        <div className="text-xl font-bold mr-8">내가 저장한 책</div>
         <button
           onClick={() => {
             setState("finish");
