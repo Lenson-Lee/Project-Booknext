@@ -67,7 +67,7 @@ function Mybook({ keywords, memo, count }: Props) {
             <p className="text-xl font-semibold">많이 읽은 장르</p>
           </div>
           <div>
-            <Chart />
+            <Chart count={count.ctgcount} />
           </div>
         </div>
       </div>

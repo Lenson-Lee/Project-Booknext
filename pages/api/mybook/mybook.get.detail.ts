@@ -81,6 +81,7 @@ export async function getAllCategoryCount(target: any) {
         notIn: "wish",
       },
     },
+    take: 5,
   });
 
   // console.log("🐭 총 독서 수 sum : ", sum);
