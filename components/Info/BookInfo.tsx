@@ -1,3 +1,4 @@
+import { useAuth } from "@/contexts/auth_user.context";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -20,6 +21,7 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
   const router = useRouter();
+  const authUser = useAuth();
 
   const getStart = (target: any) => {
     console.log(target);
@@ -147,7 +149,9 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
                   onClick={() =>
                     updateData(mydata).then((data) => {
                       alert("수정되었었습니다.");
-                      router.push(`/${router.query.screenName}`);
+                      router.push(
+                        `/${router.query.screenName}?uid=${authUser.authUser?.uid}`
+                      );
                     })
                   }
                   className="absolute right-0 bg-yellow-300 text-white px-5 py-1 rounded-lg text-sm"
@@ -171,7 +175,9 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
                 onClick={(e) => {
                   deleteData(mydata).then((data) => {
                     alert("삭제되었습니다.");
-                    router.push(`/${router.query.screenName}`);
+                    router.push(
+                      `/${router.query.screenName}?uid=${authUser.authUser?.uid}`
+                    );
                   });
                 }}
                 className="text-gray-400 text-sm"

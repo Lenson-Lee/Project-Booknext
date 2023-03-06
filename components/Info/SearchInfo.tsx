@@ -14,7 +14,6 @@ const SearchInfo = ({ data }: Props) => {
   const [score, setScore] = useState<number>(0);
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
-  const [keywords, setKeywords] = useState("");
   const authUser = useAuth();
 
   const uid = authUser.authUser?.uid ?? "undefine";
@@ -32,8 +31,11 @@ const SearchInfo = ({ data }: Props) => {
       score: score ? score : 0,
       start: start ? start : null,
       end: end ? end : null,
-      keywords: keywords ? keywords : null,
-      field: "",
+      field: JSON.stringify([
+        data?.categoryName.split(">")[1],
+        data?.categoryName.split(">")[2],
+      ]),
+      fieldcount: data?.categoryName.split(">").length > 1 ? 1 : 0,
       cover: data.cover,
     };
     await fetch("/api/mybook/mybook.add", {

@@ -22,15 +22,14 @@ model BookMemo {
   userId    String
   auth      String  
   isbn      String      
-  isbn13    String?      
-  content   String?
+  isbn13    String?
   createdAt DateTime @default(now())
   state     String
   score     Int
   start     String?
   end       String?
-  keywords  String?
   field     String?
+  fieldcount Int?
   cover     String?
   author    User  @relation(fields: [userId], references: [uid])
 

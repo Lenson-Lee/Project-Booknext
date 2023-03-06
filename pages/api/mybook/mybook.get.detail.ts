@@ -47,3 +47,46 @@ export async function getBookDetail(target: any) {
     data,
   };
 }
+
+// 나의서재 장르 카운트
+export async function getAllCategoryCount(target: any) {
+  // // DB
+  const sum = await prisma.bookMemo.count({
+    where: {
+      userId: target.uid,
+    },
+    orderBy: [
+      {
+        id: "desc",
+      },
+    ],
+  });
+
+  const ctgcount = await prisma.bookMemo.groupBy({
+    by: ["field"],
+    _sum: {
+      fieldcount: true,
+    },
+    orderBy: {
+      _count: {
+        fieldcount: "desc",
+      },
+    },
+    where: {
+      userId: target.uid,
+      field: {
+        notIn: [""],
+      },
+      state: {
+        notIn: "wish",
+      },
+    },
+  });
+
+  // console.log("🐭 총 독서 수 sum : ", sum);
+  // console.log("🐹 총 카테고리 종류와 카운트 : ", ctgcount );
+  const data = { sum: sum, ctgcount: ctgcount };
+  return {
+    data,
+  };
+}

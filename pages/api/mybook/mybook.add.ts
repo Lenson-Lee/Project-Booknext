@@ -13,8 +13,8 @@ export default async function handler(req: any, res: any) {
     score,
     start,
     end,
-    keywords,
     field,
+    fieldcount,
     cover,
   } = JSON.parse(req.body);
 
@@ -70,8 +70,8 @@ export default async function handler(req: any, res: any) {
         score: score,
         start: start,
         end: end,
-        keywords: keywords,
         field: field,
+        fieldcount: fieldcount,
         cover: cover,
       },
     });

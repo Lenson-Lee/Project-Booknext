@@ -10,8 +10,6 @@ export type BookType = {
   data: object;
 };
 
-interface Props {}
-
 function SearchQuery() {
   const router = useRouter();
   const query = router.query; // 클릭한 책의 정보
@@ -28,9 +26,4 @@ function SearchQuery() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({
-  query,
-}) => {
-  return { props: {} };
-};
 export default SearchQuery;
