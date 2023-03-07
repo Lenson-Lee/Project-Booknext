@@ -95,7 +95,7 @@ const MyBookList = ({ userData }: Props) => {
         </button>
       </div>
 
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-4 gap-x-2 gap-y-8">
         {dataList.map((book: any, index: number) => (
           <Link
             href={{

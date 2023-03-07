@@ -48,9 +48,9 @@ export async function getBookDetail(target: any) {
   };
 }
 
-// 나의서재 장르 카운트
+/** 나의서재 장르 카운트 */
 export async function getAllCategoryCount(target: any) {
-  // // DB
+  /** 전체기간 총 도서량 */
   const sum = await prisma.bookMemo.count({
     where: {
       userId: target.uid,
@@ -62,6 +62,7 @@ export async function getAllCategoryCount(target: any) {
     ],
   });
 
+  /** 장르 카운트 ex: {만화 :5권}, {소설:3권} */
   const ctgcount = await prisma.bookMemo.groupBy({
     by: ["field"],
     _sum: {
@@ -73,7 +74,7 @@ export async function getAllCategoryCount(target: any) {
       },
     },
     where: {
-      userId: target.uid,
+      userId: target ? target.uid : "undefine",
       field: {
         notIn: [""],
       },
@@ -90,4 +91,56 @@ export async function getAllCategoryCount(target: any) {
   return {
     data,
   };
+}
+
+/** 나의서재 장르 카운트(지만 목록 조회) */
+export async function getMonthCount(target: any) {
+  const getDate = (time: string) => {
+    const now = new Date(new Date().setDate(1));
+    const lastMonth = new Date(now.setMonth(now.getMonth() - 1));
+    const doubleMonth = new Date(now.setMonth(now.getMonth() - 2));
+
+    if (time === "this") {
+      return now;
+    } else if (time === "last") {
+      return lastMonth;
+    } else if (time === "doubleLast") {
+      return doubleMonth;
+    }
+  };
+
+  /** 월별 기록활동 카운트 createAt으로 산정 */
+  const thisMonthCnt = await prisma.memoList.findMany({
+    where: {
+      userId: target ? target.uid : "undefine",
+      createdAt: {
+        gte: getDate("this"),
+      },
+    },
+  });
+  const lastMonthCnt = await prisma.memoList.findMany({
+    where: {
+      userId: target ? target.uid : "undefine",
+      createdAt: {
+        gte: getDate("last"),
+        lte: getDate("last"),
+      },
+    },
+  });
+  const doubleLastMonthCnt = await prisma.memoList.findMany({
+    where: {
+      userId: target ? target.uid : "undefine",
+      createdAt: {
+        gte: getDate("doubleLast"),
+        lte: getDate("doubleLast"),
+      },
+    },
+  });
+
+  const data = {
+    thisMonth: thisMonthCnt,
+    lastMonth: lastMonthCnt,
+    twolastMonth: doubleLastMonthCnt,
+  };
+  return data;
 }

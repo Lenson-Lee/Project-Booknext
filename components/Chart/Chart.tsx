@@ -1,36 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, registerables } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(...registerables);
 
 interface Props {
   count: any;
 }
-// export const data = {
-//   labels: ["Red", "Blue", "Yellow", "Green", "A"],
-//   datasets: [
-//     {
-//       label: "읽은 수",
-//       data: [12, 19, 8, 5, 3],
-//       backgroundColor: ["#fde047", "#fef9c3", "#fef08a", "#fcd34d", "#e5e7eb"],
-//       borderColor: ["#fbbf24", "#fde68a", "#fde047", "#fbbf24", "#d1d5db"],
-//       borderWidth: 1,
-//     },
-//   ],
-// };
 
 export default function App({ count }: Props) {
   const [field, setField] = useState<any>([]);
   const [sum, setSum] = useState<any>([]);
 
   useEffect(() => {
-    count.map((item: any) => {
+    count.map((item: any, index: number) => {
       let parse = JSON.parse(item.field);
       let category = parse[0] + " > " + parse[1];
 
       /** 카테고리 목록 push */
-      setField((field: any) => [...field, category]);
+      setField((field: any) => [...field, ++index + "위 : " + category]);
 
       /** 합계 리스트 push */
       setSum((s: any) => [...s, item._sum.fieldcount]);
@@ -57,5 +45,22 @@ export default function App({ count }: Props) {
       },
     ],
   };
-  return <Pie data={data} />;
+  return (
+    <Pie
+      data={data}
+      options={{
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: "right",
+            labels: {
+              padding: 10,
+              boxWidth: 15,
+            },
+          },
+        },
+      }}
+    />
+  );
 }
