@@ -3,6 +3,7 @@ import type { GetStaticProps } from "next";
 import { GoogleAuthProvider } from "firebase/auth";
 import { getBookList } from "./api/book.list";
 import BookListSlider from "@/components/List/bookListSlider";
+import Head from "next/head";
 
 const provider = new GoogleAuthProvider();
 
@@ -15,17 +16,19 @@ interface Props {
 
 function Home({ Bestseller, ItemNewSpecial, ItemNewAll }: Props) {
   return (
-    <ServiceLayout>
-      <div className="mb-20">
-        <BookListSlider data={Bestseller} title={"베스트셀러"} />
-      </div>
-      <div className="mb-20">
-        <BookListSlider data={ItemNewSpecial} title={"주목할만한 신간"} />
-      </div>
-      <div className="mb-20">
-        <BookListSlider data={ItemNewAll} title={"신간 전체"} />
-      </div>
-    </ServiceLayout>
+    <>
+      <ServiceLayout>
+        <div className="mb-20">
+          <BookListSlider data={Bestseller} title={"베스트셀러"} />
+        </div>
+        <div className="mb-20">
+          <BookListSlider data={ItemNewSpecial} title={"주목할만한 신간"} />
+        </div>
+        <div className="mb-20">
+          <BookListSlider data={ItemNewAll} title={"신간 전체"} />
+        </div>
+      </ServiceLayout>
+    </>
   );
 }
 

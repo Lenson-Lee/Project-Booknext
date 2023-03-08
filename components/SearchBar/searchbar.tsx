@@ -15,7 +15,7 @@ const SearchBar = () => {
         onChange={(e) => {
           setQuery(e.target.value);
         }}
-        className="px-3 py-2 w-full outline-none"
+        className="px-3 py-2 w-full outline-none font-light"
         placeholder="검색어를 입력해 주세요"
       />
       <button

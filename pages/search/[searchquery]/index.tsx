@@ -12,7 +12,6 @@ interface Props {
 }
 
 function SearchQuery({ target, result }: Props) {
-  console.log("클라이언트로 넘어온 검색어 : ", target);
   return (
     <ServiceLayout>
       <div className="flex my-8 text-xl font-bold items-start">

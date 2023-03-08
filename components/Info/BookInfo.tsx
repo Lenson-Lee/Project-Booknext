@@ -188,8 +188,10 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
           ) : null}
           <div className="h-4/5">
             <p className="text-xl font-semibold mb-4">{apidata?.title}</p>
-            <p className="my-1 text-gray-500">{apidata?.categoryName}</p>
-            <div className="flex items-center gap-x-4 divide-x-2 divide-gray-300 mb-5">
+            <p className="my-1 text-gray-500 font-light">
+              {apidata?.categoryName}
+            </p>
+            <div className="flex items-center gap-x-4 font-light divide-x-2 divide-gray-300 mb-5">
               <p>{apidata?.author}</p>
               <div className="pl-4 flex items-center">
                 <p className="mr-3">평균평점</p>
@@ -209,10 +211,10 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
                 </div>
               </div>
             </div>
-            <div className="line-clamp-3">{apidata?.description}</div>
+            <div className="line-clamp-3 font-base">{apidata?.description}</div>
             <Link
               href={apidata ? apidata?.link : ""}
-              className="text-yellow-400 font-semibold text-sm cursor-pointer flex justify-end"
+              className="text-yellow-400 font-base text-sm cursor-pointer flex justify-end"
             >
               자세히 보기
             </Link>

@@ -55,15 +55,14 @@ const MyBookList = ({ userData }: Props) => {
   return (
     <>
       <div className="flex items-end mb-8">
-        <div className="text-xl font-bold mr-8">내가 저장한 책</div>
+        <div className="text-xl font-semibold mr-8">내가 저장한 책</div>
         <button
           onClick={() => {
             setState("finish");
           }}
           className={
-            (state === "finish"
-              ? "text-yellow-400 font-bold "
-              : "font-semibold ") + " text-lg mr-4"
+            (state === "finish" ? "text-yellow-400 " : "") +
+            " text-lg mr-4 font-medium"
           }
         >
           다 읽은 책
@@ -73,9 +72,8 @@ const MyBookList = ({ userData }: Props) => {
             setState("reading");
           }}
           className={
-            (state === "reading"
-              ? "text-yellow-400 font-bold "
-              : "font-semibold ") + " text-lg mr-4"
+            (state === "reading" ? "text-yellow-400 " : "") +
+            " text-lg mr-4 font-medium"
           }
         >
           읽고 있는 책
@@ -86,9 +84,8 @@ const MyBookList = ({ userData }: Props) => {
             setState("wish");
           }}
           className={
-            (state === "wish"
-              ? "text-yellow-400 font-bold "
-              : "font-semibold ") + " text-lg mr-4"
+            (state === "wish" ? "text-yellow-400 " : "") +
+            " text-lg mr-4 font-medium"
           }
         >
           찜한 책
@@ -117,15 +114,20 @@ const MyBookList = ({ userData }: Props) => {
               className="object-cover object-center border bg-gray-100 w-44 mx-auto h-60"
             />
             <div className="w-44 mt-4 mx-auto">
-              <div className="line-clamp-2 text-base line-clamp-1 font-semibold">
+              <div className="line-clamp-2 text-base font-medium">
                 {book.title}
               </div>
-              <div className="line-clamp-1 text-sm line-clamp-1">
+              <div className="line-clamp-1 text-sm mt-1 font-light">
                 {book.auth}
               </div>
             </div>
           </Link>
         ))}
+      </div>
+      <div className="flex">
+        <div className="border border-gray-300 text-gray-400 rounded-lg p-2">
+          1
+        </div>
       </div>
     </>
   );

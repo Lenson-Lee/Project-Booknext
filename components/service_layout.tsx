@@ -12,7 +12,7 @@ const ServiceLayout = function ({ children }: Props) {
       <Head>
         <title>Book Project</title>
       </Head>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 font-pretendard">
         <Navbar />
         <div className="max-w-screen-xl mx-auto">{children}</div>
       </div>
