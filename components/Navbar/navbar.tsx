@@ -6,7 +6,7 @@ const navbar = function () {
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
 
   const logOutBtn = (
-    <div className="flex gap-x-4 items-center">
+    <div className="flex gap-x-4 items-center ">
       <button className="flex items-center gap-x-2">
         <img
           src={authUser?.photoURL ?? "https://bit.ly/broken-link"}
