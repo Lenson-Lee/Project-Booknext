@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/auth_user.context";
 import Link from "next/link";
 import SearchBar from "../SearchBar/searchbar";
+import { signIn, useSession, signOut } from "next-auth/react";
 
 const navbar = function () {
   const { loading, authUser, signOut, signInWithGoogle } = useAuth();
