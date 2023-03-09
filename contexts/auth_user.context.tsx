@@ -13,6 +13,7 @@ const AuthUserContext = createContext<InAuthUserContext>({
   authUser: null,
   loading: true, //로그인진행중
   signInWithGoogle: async () => ({ user: null, creadential: null }),
+
   signOut: () => {},
 });
 
@@ -23,9 +24,11 @@ export const AuthUserProvider = function ({
 }: {
   children: React.ReactNode;
 }) {
-  const auth = useFirebaseAuth();
+  const googleAuth = useFirebaseAuth();
   return (
-    <AuthUserContext.Provider value={auth}>{children}</AuthUserContext.Provider>
+    <AuthUserContext.Provider value={googleAuth}>
+      {children}
+    </AuthUserContext.Provider>
   );
 };
 

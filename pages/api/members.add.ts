@@ -12,6 +12,8 @@ export default async function handler(
 ) {
   const { method } = req;
   const supportMethod = ["POST"];
+  console.log("🔥method");
+  console.log(method);
   try {
     if (supportMethod.indexOf(method!) === -1) {
       // 에러 반환

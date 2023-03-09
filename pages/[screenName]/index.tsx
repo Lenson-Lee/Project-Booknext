@@ -15,7 +15,6 @@ import {
   getAllCategoryCount,
   getMonthCount,
 } from "../api/mybook/mybook.get.detail";
-
 interface Props {
   /** 키워드모음 */
   keywords: any;
