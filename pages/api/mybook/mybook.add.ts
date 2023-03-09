@@ -20,15 +20,15 @@ export default async function handler(req: any, res: any) {
 
   //중복테스트. 배열에 내용이 있으면 중복
   const overTest = await prisma.bookMemo.findMany({
-    where: { isbn: isbn, state: state },
+    where: { isbn: isbn, state: state, userId: uid },
   });
 
   /** 동일한 책이 상태만 다르게 존재할 경우 상태 변경 ㅜㅜ 근데 where 절에서 state에 조건을 두 개 다는 법을 몰라서 코드를 두 개 작성함 ㅜㅜ*/
   const stateReading = await prisma.bookMemo.findMany({
-    where: { isbn: isbn, state: "reading" },
+    where: { isbn: isbn, state: "reading", userId: uid },
   });
   const stateFinish = await prisma.bookMemo.findMany({
-    where: { isbn: isbn, state: "finish" },
+    where: { isbn: isbn, state: "finish", userId: uid },
   });
 
   // 중복되는 책 존재 (같은 isbn, 같은 상태)

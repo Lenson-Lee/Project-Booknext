@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 
   /** 조회한 uid와 책 정보에 따라 메모리스트 조회 */
   const memoList = await getMymemoList(userData);
-  console.log(memoList.data.list);
+  console.log(memoList.data.list, "mybook.[detail]");
 
   console.log(">[detail].tsx SSR -- END");
   return {

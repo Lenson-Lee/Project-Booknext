@@ -10,7 +10,7 @@ interface Props {
 
 export default function App({ count }: Props) {
   const { thisMonth, lastMonth, twolastMonth } = count;
-  console.log(thisMonth);
+  // console.log(thisMonth);
 
   const today = new Date().getMonth() + 1;
   const second = new Date().getMonth();

@@ -19,7 +19,7 @@ export async function getBookDetail(target: any) {
   // // DB
   const book = await prisma.bookMemo.findMany({
     where: {
-      userId: "tMJKJUa2JCW3udqE2Poz7ubrlyD2",
+      userId: target.uid,
       isbn: target.isbn,
     },
     orderBy: [
@@ -94,7 +94,7 @@ export async function getAllCategoryCount(target: any) {
 }
 
 /** 나의서재 장르 카운트(지만 목록 조회) */
-export async function getMonthCount(target: any) {
+export async function getMonthCount(uid: any) {
   const getDate = (time: string) => {
     const now = new Date(new Date().setDate(1));
     const lastMonth = new Date(now.setMonth(now.getMonth() - 1));
@@ -112,7 +112,7 @@ export async function getMonthCount(target: any) {
   /** 월별 기록활동 카운트 createAt으로 산정 */
   const thisMonthCnt = await prisma.memoList.findMany({
     where: {
-      userId: target ? target.uid : "undefine",
+      userId: uid ? uid : "undefine",
       createdAt: {
         gte: getDate("this"),
       },
@@ -120,7 +120,7 @@ export async function getMonthCount(target: any) {
   });
   const lastMonthCnt = await prisma.memoList.findMany({
     where: {
-      userId: target ? target.uid : "undefine",
+      userId: uid ? uid : "undefine",
       createdAt: {
         gte: getDate("last"),
         lte: getDate("last"),
@@ -129,7 +129,7 @@ export async function getMonthCount(target: any) {
   });
   const doubleLastMonthCnt = await prisma.memoList.findMany({
     where: {
-      userId: target ? target.uid : "undefine",
+      userId: uid ? uid : "undefine",
       createdAt: {
         gte: getDate("doubleLast"),
         lte: getDate("doubleLast"),
