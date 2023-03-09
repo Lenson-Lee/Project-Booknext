@@ -3,6 +3,7 @@ interface Props {
 }
 const list = ({ keywordList }: Props) => {
   //
+  //
   return (
     <>
       <p className="text-xl font-semibold">내가 저장한 키워드</p>
