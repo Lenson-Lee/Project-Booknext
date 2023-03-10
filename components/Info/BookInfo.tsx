@@ -83,7 +83,11 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
         <div className="w-4/5 relative">
           {open && (
             <div className="mt-5 absolute w-full flex justify-end">
-              <MyBookInfo getData={getData} response={response} />
+              <MyBookInfo
+                getData={getData}
+                response={response}
+                mydata={mydata}
+              />
             </div>
           )}
           {state === "mybook" ? (

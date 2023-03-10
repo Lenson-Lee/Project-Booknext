@@ -51,6 +51,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
   const data = {
     isbn: query?.isbn,
     isbn13: query?.isbn13,
+    uid: query?.uid,
   };
 
   /** uid, state 조회 */
@@ -62,9 +63,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     isbn: query?.isbn,
   };
 
+  // console.log(userData, "________ userData");
   /** 조회한 uid와 책 정보에 따라 메모리스트 조회 */
   const memoList = await getMymemoList(userData);
-  console.log(memoList.data.list, "mybook.[detail]");
+  // console.log(memoList.data.list, "mybook.[detail]");
 
   console.log(">[detail].tsx SSR -- END");
   return {

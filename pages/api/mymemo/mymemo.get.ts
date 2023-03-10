@@ -70,7 +70,6 @@ export async function getAllMemoList(uid: any) {
     ],
   });
   console.log(">mymemo.get getAllKeywordList --END");
-  console.log(uid);
   const data = { list };
   return {
     data,

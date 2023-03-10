@@ -11,8 +11,10 @@ interface Props {
   getData: (data: any) => void;
   /** DB에 전송 */
   response: () => void;
+  /** 수정하는 경우 기본값 넣고 시작 */
+  mydata: any;
 }
-const MyBookInfo = ({ getData, response }: Props) => {
+const MyBookInfo = ({ getData, response, mydata }: Props) => {
   const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
 
   const [score, setScore] = useState<number>(0);
@@ -51,25 +53,38 @@ const MyBookInfo = ({ getData, response }: Props) => {
     /**클릭시 부모에게 전달 */
     getData({ score: score, start: start, end: end });
   }, [score, start, end]);
+
+  useEffect(() => {
+    if (mydata) {
+      console.log(mydata);
+      selectScore(mydata.score);
+      setStart(mydata.start);
+      setEnd(mydata.end);
+    }
+  }, []);
   return (
     <>
-      <div className="mt-4 bg-white border rounded-xl pt-8 pb-10 px-12 absolute">
-        <div className="flex gap-x-10 text-sm mb-4">
+      <div className="shadow-lg mt-4 bg-white border rounded-xl pt-8 pb-10 px-12 absolute">
+        <div className="flex gap-x-10 items-end  mb-4">
           <button
             onClick={() => {
               setBookState("finish");
             }}
           >
-            <div
+            <span
               className={
-                (bookState === "finish" ? "bg-yellow-300 " : "") +
-                "w-2 h-2 rounded-full mx-auto mb-1"
+                (bookState === "finish" ? "bg-yellow-300 " : "hidden") +
+                " relative flex h-2 w-2 rounded-full  mb-1 mx-auto"
               }
-            />
+            >
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-300 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-300"></span>
+            </span>
+
             <p
               className={
                 bookState === "finish"
-                  ? "text-black font-semibold"
+                  ? "text-black font-medium"
                   : "text-gray-400 "
               }
             >
@@ -81,16 +96,20 @@ const MyBookInfo = ({ getData, response }: Props) => {
               setBookState("reading");
             }}
           >
-            <div
+            <span
               className={
-                (bookState === "reading" ? "bg-yellow-300 " : "") +
-                "w-2 h-2 rounded-full mx-auto mb-1"
+                (bookState === "reading" ? "bg-yellow-300 " : "hidden") +
+                " relative flex h-2 w-2 rounded-full  mb-1 mx-auto"
               }
-            />
+            >
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-300 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-300"></span>
+            </span>
+
             <p
               className={
                 bookState === "reading"
-                  ? "text-black font-semibold"
+                  ? "text-black font-medium"
                   : "text-gray-400 "
               }
             >
@@ -111,8 +130,8 @@ const MyBookInfo = ({ getData, response }: Props) => {
               </div>
             ) : null}
           </div>
-          <div className="flex gap-x-8 items-center text-sm">
-            <p className="font-semibold">별점주기</p>
+          <div className="flex gap-x-4 items-center text-sm">
+            <p className="">별점주기</p>
             <div className="flex">
               {star.map((el, index) => {
                 return (

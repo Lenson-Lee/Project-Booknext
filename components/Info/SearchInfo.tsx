@@ -110,7 +110,7 @@ const SearchInfo = ({ data }: Props) => {
           <p>내 서재에 추가</p>
         </button>
       </div>
-      {open && <MyBookInfo getData={getData} response={response} />}
+      {open && <MyBookInfo getData={getData} response={response} mydata />}
     </div>
   );
 };

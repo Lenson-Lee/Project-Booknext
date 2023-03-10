@@ -37,7 +37,6 @@ export async function getBookDetail(target: any) {
   );
   const response = await request.json();
 
-  console.log("target.isbn : ", target.isbn, "isbnID : ", isbnID);
   console.log(">mybook.get.detail --END");
   const apidata = response?.item[0];
   const mydata = book[0];

@@ -103,6 +103,7 @@ const MyBookList = ({ userData }: Props) => {
               query: {
                 isbn: book.isbn,
                 isbn13: book.isbn13 ? book.isbn13 : "null",
+                uid: authUser?.uid,
               },
             }}
             key={book.isbn + index}
