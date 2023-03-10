@@ -62,7 +62,9 @@ const navbar = function () {
           >
             나의 서재
           </Link>
-          <div className="text-lg font-semibold">둘러보기</div>
+          <Link href="/tour" className="text-lg font-semibold">
+            둘러보기
+          </Link>
         </div>
         <SearchBar />
         <div className="flex items-center gap-x-2">

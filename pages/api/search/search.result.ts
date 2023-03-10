@@ -6,7 +6,7 @@ export default function List({ data }: Props) {
   return data;
 }
 
-// 검색결과
+// 검색결과전체
 export async function searchResult(target: any) {
   // console.log("target ===========================");
   // console.log(target);
