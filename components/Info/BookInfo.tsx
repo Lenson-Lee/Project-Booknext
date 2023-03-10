@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import MyBookInfo from "../Popup/MyBookInfo";
 import MybookDetail from "./MybookDetail";
 import SearchInfo from "./SearchInfo";
 
@@ -17,20 +18,13 @@ interface Props {
 const BookInfo = ({ state, apidata, mydata }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
-  const [score, setScore] = useState<number>(0);
-  const [start, setStart] = useState<string>("");
-  const [end, setEnd] = useState<string>("");
   const router = useRouter();
   const authUser = useAuth();
 
-  const getStart = (target: any) => {
-    console.log(target);
-    setStart(target);
-  };
-
-  const getEnd = (target: any) => {
-    console.log(target);
-    setEnd(target);
+  /** MyBookInfo 컴포넌트에서 받은 정보(별점, 읽은기간) */
+  const [getDataList, setDataList] = useState<string | any>(null);
+  const getData = (info: any) => {
+    setDataList(info);
   };
 
   // 삭제 이벤트 통신
@@ -47,14 +41,14 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
   };
 
   // 수정이벤트 통신
-  const updateData = async (target: React.SyntheticEvent) => {
+  const updateData = async () => {
     setOpen(false);
     const updatedata = {
       id: mydata.id,
       state: bookState,
-      score: score ? score : 0,
-      start: start ? start : null,
-      end: end ? end : null,
+      score: getDataList ? getDataList.score : 0,
+      start: getDataList ? getDataList.start : null,
+      end: getDataList ? getDataList.end : null,
     };
     const response = await fetch("/api/mybook/mybook.update", {
       method: "put",
@@ -67,6 +61,12 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
     return response;
   };
 
+  async function response() {
+    updateData().then(() => {
+      alert("수정되었었습니다.");
+      router.push(`/${router.query.screenName}?uid=${authUser.authUser?.uid}`);
+    });
+  }
   useEffect(() => {
     if (!router.isReady) return;
     //screenName 쓸모없는뎅 url때문에 넘어오나?
@@ -81,84 +81,9 @@ const BookInfo = ({ state, apidata, mydata }: Props) => {
           className="object-cover object-center border bg-gray-100 w-56 mx-auto h-72"
         />
         <div className="w-4/5 relative">
-          {/* ❌중복되는 코드 정리해야겠죠 */}
           {open && (
-            <div className="mt-4 bg-white border rounded-xl pt-8 pb-10 px-12 absolute top-5 right-0">
-              <div className="flex gap-x-10 text-sm mb-4">
-                <button
-                  onClick={() => {
-                    setBookState("finish");
-                  }}
-                >
-                  <div
-                    className={
-                      (bookState === "finish" ? "bg-yellow-300 " : "") +
-                      "w-2 h-2 rounded-full mx-auto mb-1"
-                    }
-                  />
-                  <p
-                    className={
-                      bookState === "finish"
-                        ? "text-black font-semibold"
-                        : "text-gray-400 "
-                    }
-                  >
-                    다 읽은 책
-                  </p>
-                </button>
-                <button
-                  onClick={() => {
-                    setBookState("reading");
-                  }}
-                >
-                  <div
-                    className={
-                      (bookState === "reading" ? "bg-yellow-300 " : "") +
-                      "w-2 h-2 rounded-full mx-auto mb-1"
-                    }
-                  />
-                  <p
-                    className={
-                      bookState === "reading"
-                        ? "text-black font-semibold"
-                        : "text-gray-400 "
-                    }
-                  >
-                    읽고 있는 책
-                  </p>
-                </button>
-              </div>
-              <div className="relative border-t pt-4 space-y-4 mb-6">
-                <div className="flex text-sm gap-x-2">
-                  <div className="flex items-center justify-center">
-                    <DatePicker getStart={getStart} getEnd state="start" />
-                    <p>부터</p>
-                  </div>
-                  {bookState === "finish" ? (
-                    <div className="flex items-center justify-center">
-                      <DatePicker getStart getEnd={getEnd} state="end" />
-                      <p>까지</p>
-                    </div>
-                  ) : null}
-                </div>
-                <div className="flex gap-x-8 text-sm">
-                  <p className="font-semibold">별점주기</p>
-                  <div className="flex gap-x-1">ㅁ</div>
-                </div>
-                <button
-                  onClick={() =>
-                    updateData(mydata).then((data) => {
-                      alert("수정되었었습니다.");
-                      router.push(
-                        `/${router.query.screenName}?uid=${authUser.authUser?.uid}`
-                      );
-                    })
-                  }
-                  className="absolute right-0 bg-yellow-300 text-white px-5 py-1 rounded-lg text-sm"
-                >
-                  등록
-                </button>
-              </div>
+            <div className="mt-5 absolute w-full flex justify-end">
+              <MyBookInfo getData={getData} response={response} />
             </div>
           )}
           {state === "mybook" ? (

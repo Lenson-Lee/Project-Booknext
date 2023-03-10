@@ -14,7 +14,6 @@ function SearchQuery() {
   const query = router.query; // 클릭한 책의 정보
   const data = query && query.data ? JSON.parse(query.data as string) : null;
 
-  console.log("넘어왔다넘어왔어", query, data);
   return (
     <ServiceLayout>
       <div className="bg-white w-full py-10 mt-20 rounded-xl">

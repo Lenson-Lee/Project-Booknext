@@ -11,8 +11,6 @@ export async function getSearchDetail(target: any) {
 `
   );
   const response = await request.json();
-
-  console.log("target.isbn : ", target.isbn, "isbnID : ", isbnID);
   console.log(">search.detail --END");
   const apidata = response?.item[0];
 

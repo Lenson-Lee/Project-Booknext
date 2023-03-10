@@ -1,8 +1,9 @@
 import { useAuth } from "@/contexts/auth_user.context";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 // import DatePicker from "@/components/DatePicker/DatePicker";
 
 import dynamic from "next/dynamic";
+import MyBookInfo from "../Popup/MyBookInfo";
 const DatePicker = dynamic(() => import("@/components/DatePicker/DatePicker"));
 
 interface Props {
@@ -11,16 +12,22 @@ interface Props {
 const SearchInfo = ({ data }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [bookState, setBookState] = useState<string>("finish"); //  finish, reading
-  const [score, setScore] = useState<number>(0);
-  const [start, setStart] = useState<string>("");
-  const [end, setEnd] = useState<string>("");
+
+  /** MyBookInfo 컴포넌트에서 받은 정보(별점, 읽은기간) */
+  const [getDataList, setDataList] = useState<string | any>(null);
   const authUser = useAuth();
 
   const uid = authUser.authUser?.uid ?? "undefine";
   const isbn13 = data?.isbn13 ? data.isbn13 : "undefine";
+
+  const getData = (info: any) => {
+    setDataList(info);
+  };
+
   // 데이터 전송
   async function response() {
     setOpen(false);
+
     const postdata = {
       uid: uid,
       state: bookState,
@@ -28,9 +35,9 @@ const SearchInfo = ({ data }: Props) => {
       author: data.author,
       isbn: data.isbn,
       isbn13: isbn13,
-      score: score ? score : 0,
-      start: start ? start : null,
-      end: end ? end : null,
+      score: getDataList ? getDataList.score : 0,
+      start: getDataList ? getDataList.start : null,
+      end: getDataList ? getDataList.end : null,
       field: JSON.stringify([
         data?.categoryName.split(">")[1],
         data?.categoryName.split(">")[2],
@@ -38,6 +45,7 @@ const SearchInfo = ({ data }: Props) => {
       fieldcount: data?.categoryName.split(">").length > 1 ? 1 : 0,
       cover: data.cover,
     };
+    console.log(postdata);
     await fetch("/api/mybook/mybook.add", {
       method: "POST",
       body: JSON.stringify(postdata),
@@ -46,16 +54,6 @@ const SearchInfo = ({ data }: Props) => {
       },
     });
   }
-
-  const getStart = (target: any) => {
-    console.log(target);
-    setStart(target);
-  };
-
-  const getEnd = (target: any) => {
-    console.log(target);
-    setEnd(target);
-  };
 
   // 찜하기의 경우 클릭하면 바로 입력 : 추후에 두 번째 클릭은 찜 삭제로 처리
   useEffect(() => {
@@ -112,78 +110,7 @@ const SearchInfo = ({ data }: Props) => {
           <p>내 서재에 추가</p>
         </button>
       </div>
-      {open && (
-        <div className="mt-4 bg-white border rounded-xl pt-8 pb-10 px-12 absolute">
-          <div className="flex gap-x-10 text-sm mb-4">
-            <button
-              onClick={() => {
-                setBookState("finish");
-              }}
-            >
-              <div
-                className={
-                  (bookState === "finish" ? "bg-yellow-300 " : "") +
-                  "w-2 h-2 rounded-full mx-auto mb-1"
-                }
-              />
-              <p
-                className={
-                  bookState === "finish"
-                    ? "text-black font-semibold"
-                    : "text-gray-400 "
-                }
-              >
-                다 읽은 책
-              </p>
-            </button>
-            <button
-              onClick={() => {
-                setBookState("reading");
-              }}
-            >
-              <div
-                className={
-                  (bookState === "reading" ? "bg-yellow-300 " : "") +
-                  "w-2 h-2 rounded-full mx-auto mb-1"
-                }
-              />
-              <p
-                className={
-                  bookState === "reading"
-                    ? "text-black font-semibold"
-                    : "text-gray-400 "
-                }
-              >
-                읽고 있는 책
-              </p>
-            </button>
-          </div>
-          <div className="relative border-t pt-4 space-y-4 mb-6">
-            <div className="flex text-sm gap-x-2">
-              <div className="flex items-center justify-center">
-                <DatePicker getStart={getStart} getEnd state="start" />
-                <p>부터</p>
-              </div>
-              {bookState === "finish" ? (
-                <div className="flex items-center justify-center">
-                  <DatePicker getStart getEnd={getEnd} state="end" />
-                  <p>까지</p>
-                </div>
-              ) : null}
-            </div>
-            <div className="flex gap-x-8 text-sm">
-              <p className="font-semibold">별점주기</p>
-              <div className="flex gap-x-1">ㅁ</div>
-            </div>
-            <button
-              onClick={response}
-              className="absolute right-0 bg-yellow-300 text-white px-5 py-1 rounded-lg text-sm"
-            >
-              등록
-            </button>
-          </div>
-        </div>
-      )}
+      {open && <MyBookInfo getData={getData} response={response} />}
     </div>
   );
 };

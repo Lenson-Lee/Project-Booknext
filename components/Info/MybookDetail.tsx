@@ -1,11 +1,11 @@
 import { getYear, getMonth, getDate, getDay, parseISO } from "date-fns";
 
 interface Props {
+  /** 내가 작성한 책 정보 */
   mydata: any;
 }
 
 const MybookDetail = ({ mydata }: Props) => {
-  console.log("👍 MybookDetail의 mydata : ", mydata);
   const state = () => {
     if (mydata.state === "wish") {
       return "찜한 책";
@@ -16,19 +16,9 @@ const MybookDetail = ({ mydata }: Props) => {
     }
   };
 
-  //요일찾기
-  const findDay = (e: number) => {
-    const dayList = ["일", "월", "화", "수", "목", "금", "토"];
-    return dayList[e];
-  };
-
   const calcDay = (day: any) => {
     return (
       getYear(day) + "년 " + (getMonth(day) + 1) + "월 " + getDate(day) + "일 "
-      // +
-      // "(" +
-      // findDay(getDay(day)) +
-      // ")"
     );
   };
 
@@ -45,7 +35,7 @@ const MybookDetail = ({ mydata }: Props) => {
               clipRule="evenodd"
             />
           </svg>
-          <p> 3.4점</p>
+          <p>{mydata.score + "점"}</p>
         </div>
       </div>
       <div className="flex  gap-x-3">
